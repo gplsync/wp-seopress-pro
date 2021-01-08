@@ -11,8 +11,8 @@ jQuery(document).ready(function($) {
         method : 'GET',
         url : seopressAjaxRequestGoogleAnalytics.seopress_request_google_analytics,
         data : {
-            action: 'seopress_request_google_analytics',
-            _ajax_nonce: seopressAjaxRequestGoogleAnalytics.seopress_nonce,
+            action: 'seopress_request_google_analytics'
+            //_ajax_nonce: seopressAjaxRequestGoogleAnalytics.seopress_nonce,
         },
         success : function( data ) {
             if ( data.success ) {
@@ -23,13 +23,13 @@ jQuery(document).ready(function($) {
                 $( '#seopress-ga-avgSessionDuration' ).html(data.data.avgSessionDuration);
                 $( '#seopress-ga-bounceRate' ).html(data.data.bounceRate + '%');
                 $( '#seopress-ga-percentNewSessions' ).html(data.data.percentNewSessions + '%');
-                
+
                 $( '#sp-tabs-2' ).load(' #sp-tabs-2');
                 $( '#sp-tabs-3' ).load(' #sp-tabs-3');
                 $( '#sp-tabs-4' ).load(' #sp-tabs-4');
                 $( '#sp-tabs-5' ).load(' #sp-tabs-5');
 
-                
+
                 //Graph
                 if (typeof ctx !== 'undefined') {
                     var data = {

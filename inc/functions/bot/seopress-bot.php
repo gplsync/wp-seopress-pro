@@ -87,7 +87,7 @@ class SEOPress_Bot_batch {
         <div class="seopress-option">
             <?php
             if (isset($_GET['settings-updated']) && $_GET['settings-updated'] === 'true') {
-                echo '<div class="components-snackbar-list" role="status" aria-live="polite" aria-atomic="true"><div class="components-snackbar"><div class="components-snackbar__content"><span class="dashicons dashicons-yes"></span>'.__('Your settings has been saved.','wp-seopress-pro').'</div></div></div>';
+                echo '<div class="components-snackbar-list"><div class="components-snackbar"><div class="components-snackbar__content"><span class="dashicons dashicons-yes"></span>'.__('Your settings has been saved.','wp-seopress-pro').'</div></div></div>';
             }
             global $wp_version, $title;
             $current_tab = '';
