@@ -24,12 +24,12 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '4.2.2.x-dev',
-    'version' => '4.2.2.9999999-dev',
+    'pretty_version' => '4.3.x-dev',
+    'version' => '4.3.9999999.9999999-dev',
     'aliases' => 
     array (
     ),
-    'reference' => '54e8cf57528ce17f4e9cb3a71080249c8227d42c',
+    'reference' => '4243eba893759254021636f2730161ef8ce98767',
     'name' => 'wp-seopress/wp-seopress',
   ),
   'versions' => 
@@ -72,12 +72,12 @@ private static $installed = array (
     ),
     'guzzlehttp/guzzle' => 
     array (
-      'pretty_version' => '7.2.0',
-      'version' => '7.2.0.0',
+      'pretty_version' => '6.5.5',
+      'version' => '6.5.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '0aa74dfb41ae110835923ef10a9d803a22d50e79',
+      'reference' => '9d4290de1cfd701f38099ef7e183b64b4b7b0c5e',
     ),
     'guzzlehttp/promises' => 
     array (
@@ -99,12 +99,21 @@ private static $installed = array (
     ),
     'monolog/monolog' => 
     array (
-      'pretty_version' => '2.2.0',
-      'version' => '2.2.0.0',
+      'pretty_version' => '1.26.0',
+      'version' => '1.26.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '1cb1cde8e8dd0f70cc0fe51354a59acad9302084',
+      'reference' => '2209ddd84e7ef1256b7af205d0717fb62cfc9c33',
+    ),
+    'paragonie/random_compat' => 
+    array (
+      'pretty_version' => 'v2.0.19',
+      'version' => '2.0.19.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '446fc9faa5c2a9ddf65eb7121c0af7e857295241',
     ),
     'phpseclib/phpseclib' => 
     array (
@@ -123,22 +132,6 @@ private static $installed = array (
       array (
       ),
       'reference' => 'd11b50ad223250cf17b86e38383413f5a6764bf8',
-    ),
-    'psr/http-client' => 
-    array (
-      'pretty_version' => '1.0.1',
-      'version' => '1.0.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '2dfb5f6c5eff0e91e20e913f8c5452ed95b86621',
-    ),
-    'psr/http-client-implementation' => 
-    array (
-      'provided' => 
-      array (
-        0 => '1.0',
-      ),
     ),
     'psr/http-message' => 
     array (
@@ -181,14 +174,50 @@ private static $installed = array (
       ),
       'reference' => '120b605dfeb996808c31b6477290a714d356e822',
     ),
-    'wp-seopress/wp-seopress' => 
+    'symfony/polyfill-intl-idn' => 
     array (
-      'pretty_version' => '4.2.2.x-dev',
-      'version' => '4.2.2.9999999-dev',
+      'pretty_version' => 'v1.19.0',
+      'version' => '1.19.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '54e8cf57528ce17f4e9cb3a71080249c8227d42c',
+      'reference' => '4ad5115c0f5d5172a9fe8147675ec6de266d8826',
+    ),
+    'symfony/polyfill-intl-normalizer' => 
+    array (
+      'pretty_version' => 'v1.19.0',
+      'version' => '1.19.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8db0ae7936b42feb370840cf24de1a144fb0ef27',
+    ),
+    'symfony/polyfill-php70' => 
+    array (
+      'pretty_version' => 'v1.19.0',
+      'version' => '1.19.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3fe414077251a81a1b15b1c709faf5c2fbae3d4e',
+    ),
+    'symfony/polyfill-php72' => 
+    array (
+      'pretty_version' => 'v1.19.0',
+      'version' => '1.19.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'beecef6b463b06954638f02378f52496cb84bacc',
+    ),
+    'wp-seopress/wp-seopress' => 
+    array (
+      'pretty_version' => '4.3.x-dev',
+      'version' => '4.3.9999999.9999999-dev',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '4243eba893759254021636f2730161ef8ce98767',
     ),
   ),
 );

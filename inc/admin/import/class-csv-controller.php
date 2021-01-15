@@ -135,7 +135,7 @@ class SEOPRESS_CSV_Setup_Wizard_Controller {
 		$this->step            = isset( $_REQUEST['step'] ) ? sanitize_key( $_REQUEST['step'] ) : current( array_keys( $this->steps ) );
 		$this->file            = isset( $_REQUEST['file'] ) ? seopress_clean( wp_unslash( $_REQUEST['file'] ) ) : '';
 		$this->delimiter       = ! empty( $_REQUEST['delimiter'] ) ? seopress_clean( wp_unslash( $_REQUEST['delimiter'] ) ) : ';';
-		
+
 		// Import mappings for CSV data.
 		include_once dirname( __FILE__ ) . '/mapping.php';
 	}
@@ -702,6 +702,7 @@ class SEOPRESS_CSV_Setup_Wizard_Controller {
 					__( 'noarchive', 'wp-seopress-pro' )			=> 'noarchive',
 					__( 'nosnippet', 'wp-seopress-pro' )			=> 'nosnippet',
 					__( 'Canonical URL', 'wp-seopress-pro' )		=> 'canonical_url',
+					__( 'Primary category', 'wp-seopress-pro' )		=> 'primary_cat',
 					__( 'Active redirect', 'wp-seopress-pro' )		=> 'redirect_active',
 					__( 'Redirection type', 'wp-seopress-pro' )		=> 'redirect_type',
 					__( 'URL redirect', 'wp-seopress-pro' )			=> 'redirect_url',
@@ -750,6 +751,7 @@ class SEOPRESS_CSV_Setup_Wizard_Controller {
 			'noarchive'          	=> __( 'noarchive? (yes)', 'wp-seopress-pro' ),
 			'nosnippet'          	=> __( 'nosnippet? (yes)', 'wp-seopress-pro' ),
 			'canonical_url'         => __( 'Canonical URL', 'wp-seopress-pro' ),
+			'primary_cat'           => __( 'Primary category', 'wp-seopress-pro' ),
 			'redirect_active'       => __( 'Active redirect', 'wp-seopress-pro' ),
 			'redirect_type'         => __( 'Redirection type', 'wp-seopress-pro' ),
 			'redirect_url'          => __( 'URL redirect', 'wp-seopress-pro' ),

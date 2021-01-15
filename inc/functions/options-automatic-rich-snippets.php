@@ -1508,6 +1508,12 @@ if (seopress_rich_snippets_enable_option() =='1') { //Is RS enable
 				$get_sale_price = $product->get_sale_price();
 			}
 
+            /*sale price with tax*/
+			$get_sale_price_with_tax ='';
+			if (isset($product) && function_exists('wc_get_price_including_tax')) {
+				$get_sale_price_with_tax = wc_get_price_including_tax($product, array('price' => $get_regular_price ));
+			}
+
 			/*sku*/
 			$get_sku ='';
 			if (isset($product) && method_exists($product, 'get_sku')) {
@@ -1542,7 +1548,6 @@ if (seopress_rich_snippets_enable_option() =='1') { //Is RS enable
 				}
 			}
 
-
 			$sp_schemas_dyn_variables = array(
 				'site_title',
 				'tagline',
@@ -1558,7 +1563,8 @@ if (seopress_rich_snippets_enable_option() =='1') { //Is RS enable
 				'post_thumbnail',
 				'post_author_picture',
 				'product_regular_price',
-				'product_sale_price',
+                'product_sale_price',
+                'product_price_with_tax',
 				'product_date_from',
 				'product_date_to',
 				'product_sku',
@@ -1584,6 +1590,7 @@ if (seopress_rich_snippets_enable_option() =='1') { //Is RS enable
 				get_avatar_url(get_the_author_meta('ID')),
 				$get_regular_price,
 				$get_sale_price,
+				$get_sale_price_with_tax,
 				$get_date_on_sale_from,
 				$get_date_on_sale_to,
 				$get_sku,

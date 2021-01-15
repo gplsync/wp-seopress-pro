@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) or die( 'Please don&rsquo;t call the plugin directly. Thank
  * @package SEOPress_Bot_batch
  * @author  Thomas Griffin + Benjamin Denis
  */
-class SEOPress_Bot_batch {    
+class SEOPress_Bot_batch {
     /**
      * Holds the class object.
      *
@@ -65,7 +65,7 @@ class SEOPress_Bot_batch {
      * @since 1.0.0
      */
     public function menu() {
-        if(seopress_get_toggle_option('bot')=='1') { 
+        if(seopress_get_toggle_option('bot')=='1') {
             $this->hook = add_submenu_page('seopress-option', __('Broken links','wp-seopress-pro'), __('BOT','wp-seopress-pro'), seopress_capability( 'manage_options', 'menu' ), $this->plugin_slug, array( $this, 'menu_cb' ));
         }
     }
@@ -75,9 +75,9 @@ class SEOPress_Bot_batch {
      *
      * @since 1.0.0
      */
-    public function menu_cb() { 
+    public function menu_cb() {
         $this->options = get_option( 'seopress_bot_option_name' );
-        
+
         if (is_plugin_active('wp-seopress/seopress.php')) {
             if (function_exists('seopress_admin_header')) {
                 echo seopress_admin_header();
@@ -87,7 +87,7 @@ class SEOPress_Bot_batch {
         <div class="seopress-option">
             <?php
             if (isset($_GET['settings-updated']) && $_GET['settings-updated'] === 'true') {
-                echo '<div class="components-snackbar-list"><div class="components-snackbar"><div class="components-snackbar__content"><span class="dashicons dashicons-yes"></span>'.__('Your settings has been saved.','wp-seopress-pro').'</div></div></div>';
+                echo '<div class="sp-components-snackbar-list"><div class="sp-components-snackbar"><div class="sp-components-snackbar__content"><span class="dashicons dashicons-yes"></span>'.__('Your settings has been saved.','wp-seopress-pro').'</div></div></div>';
             }
             global $wp_version, $title;
             $current_tab = '';
@@ -96,7 +96,7 @@ class SEOPress_Bot_batch {
             ?>
 
             <div id="seopress-tabs" class="wrap">
-                <?php 
+                <?php
                     $plugin_settings_tabs = array(
                         'tab_seopress_scan' => __( "Scan", "wp-seopress-pro" ),
                         'tab_seopress_scan_settings' => __( "Settings", "wp-seopress-pro" )
@@ -132,7 +132,7 @@ class SEOPress_Bot_batch {
                                 <br>
                             </p>
                         </form>
-                    <?php } else { 
+                    <?php } else {
                         _e('No scan','wp-seopress-pro');
                     } ?>
                     <hr>
@@ -145,7 +145,7 @@ class SEOPress_Bot_batch {
                         <textarea id="seopress_bot_log" rows="10" width="100%" readonly style="display:none"><?php _e('---Scan in progress (don\'t close this window)---','wp-seopress-pro'); ?></textarea>
                     </div>
                 </div><!--end .wrap-bot-form-->
-                
+
                 <!-- Settings -->
                 <div class="seopress-tab <?php if ($current_tab == 'tab_seopress_scan_settings') { echo 'active'; } ?>" id="tab_seopress_scan_settings">
                     <form method="post" action="<?php echo admin_url('options.php'); ?>">

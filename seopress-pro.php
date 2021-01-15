@@ -4,7 +4,7 @@ Plugin Name: SEOPress PRO
 Plugin URI: https://www.seopress.org/seopress-pro/
 GitHub Plugin URI: https://github.com/gplsync/wp-seopress-pro/
 Description: The PRO version of SEOPress. SEOPress required (free).
-Version: 4.2.2
+Version: 4.3.0
 Author: SEOPress
 Author URI: https://www.seopress.org/seopress-pro/
 License: GPLv2
@@ -33,8 +33,7 @@ if ( ! function_exists('add_action')) {
     echo 'Please don&rsquo;t call the plugin directly. Thanks :)';
     exit;
 }
-update_option('seopress_pro_license_key', 'seopress_pro_license_key'); 
-update_option('seopress_pro_license_status', 'valid');
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //Class dedicated to asynchronous
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +78,8 @@ function seopress_pro_activation() {
             activate_plugins('wp-seopress/seopress.php');
         }
         add_option('seopress_pro_activated', 'yes');
-        update_option('seopress_pro_license_key', 'GPL001122334455AA6677BB8899CC000');update_option('seopress_pro_license_status', 'valid');
+    	update_option( 'seopress_pro_license_status', 'valid');
+
         flush_rewrite_rules(false);
 
         //CRON - 404 cleaning
@@ -141,15 +141,26 @@ function seopress_pro_uninstall() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //Define
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-define('SEOPRESS_PRO_VERSION', '4.2.2');
+define('SEOPRESS_PRO_VERSION', '4.3.0');
 define('SEOPRESS_PRO_AUTHOR', 'Benjamin Denis');
 define('STORE_URL_SEOPRESS', 'https://www.seopress.org');
 define('ITEM_ID_SEOPRESS', 113);
 define('ITEM_NAME_SEOPRESS', 'SEOPress PRO');
 define('SEOPRESS_LICENSE_PAGE', 'seopress-license');
+define('SEOPRESS_PRO_PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
+use SEOPressPro\Core\Kernel;
 
-require_once __DIR__ . '/vendor/autoload.php';
+if (file_exists(__DIR__ . '/vendor/autoload.php') && file_exists(WP_PLUGIN_DIR . '/wp-seopress/vendor/autoload.php')) {
+    require_once WP_PLUGIN_DIR . '/wp-seopress/vendor/autoload.php';
+    require_once __DIR__ . '/vendor/autoload.php';
+    Kernel::execute([
+        'file'      => __FILE__,
+        'slug'      => 'wp-seopress-pro',
+        'main_file' => 'seopress-pro',
+        'root'      => __DIR__,
+    ]);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //SEOPRESS PRO INIT
@@ -595,10 +606,6 @@ function seopress_xml_sitemap_news_enable_option() {
     }
 }
 
-add_action('init', 'seopress_google_news_rewrite');
-add_action('query_vars', 'seopress_google_news_query_vars');
-add_action('template_redirect', 'seopress_google_news_change_template', 1);
-
 //WPML compatibility
 if (defined('ICL_SITEPRESS_VERSION')) {
     add_filter('request', 'seopress_wpml_block_secondary_languages2');
@@ -611,44 +618,6 @@ function seopress_wpml_block_secondary_languages2($q) {
     }
 
     return $q;
-}
-
-function seopress_google_news_rewrite() {
-    //Google News
-    if ('1' == seopress_xml_sitemap_news_enable_option() && function_exists('seopress_get_toggle_option') && '1' == seopress_get_toggle_option('news')) {
-        add_rewrite_rule('sitemaps/news.xml?$', 'index.php?seopress_news=1', 'top');
-    }
-}
-
-function seopress_google_news_query_vars($vars) {
-    if ('1' == seopress_xml_sitemap_news_enable_option() && function_exists('seopress_get_toggle_option') && '1' == seopress_get_toggle_option('news')) {
-        $vars[] = 'seopress_news';
-    }
-
-    return $vars;
-}
-
-function seopress_google_news_change_template($template) {
-    if ('1' == seopress_xml_sitemap_news_enable_option() && function_exists('seopress_get_toggle_option') && '1' == seopress_get_toggle_option('news')) {
-        if ('1' === get_query_var('seopress_news')) {
-            $seopress_sitemap_file = 'template-xml-sitemaps-news.php';
-        }
-
-        if (isset($seopress_sitemap_file) && file_exists(plugin_dir_path(__FILE__) . 'inc/functions/google-news/' . $seopress_sitemap_file)) {
-            $return_true = '';
-            $return_true = apply_filters('seopress_ob_end_flush_all', $return_true);
-
-            if (has_filter('seopress_ob_end_flush_all') && true == $return_true) {
-                wp_ob_end_flush_all();
-                exit();
-            }
-
-            include plugin_dir_path(__FILE__) . 'inc/functions/google-news/' . $seopress_sitemap_file;
-            exit();
-        }
-    }
-
-    return $template;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -667,10 +636,6 @@ function seopress_xml_sitemap_video_enable_option() {
 }
 
 if ('1' == seopress_xml_sitemap_video_enable_option()) {
-    add_action('init', 'seopress_video_xml_rewrite');
-    add_action('query_vars', 'seopress_video_xml_query_vars');
-    add_action('template_redirect', 'seopress_video_xml_change_template', 1);
-
     //WPML compatibility
     if (defined('ICL_SITEPRESS_VERSION')) {
         add_filter('request', 'seopress_wpml_block_secondary_languages3');
@@ -683,43 +648,6 @@ if ('1' == seopress_xml_sitemap_video_enable_option()) {
         }
 
         return $q;
-    }
-
-    function seopress_video_xml_rewrite() {
-        //XML Video sitemap
-        if ('' != seopress_xml_sitemap_video_enable_option()) {
-            $matches[2] = '';
-            add_rewrite_rule('sitemaps/video([0-9]+)?.xml$', 'index.php?seopress_video=1&seopress_paged=' . $matches[2], 'top');
-        }
-    }
-
-    function seopress_video_xml_query_vars($vars) {
-        $vars[] = 'seopress_video';
-
-        return $vars;
-    }
-
-    function seopress_video_xml_change_template($template) {
-        if ('1' == seopress_xml_sitemap_video_enable_option()) {
-            if ('1' === get_query_var('seopress_video')) {
-                $seopress_sitemap_file = 'template-xml-sitemaps-video.php';
-            }
-
-            if (isset($seopress_sitemap_file) && file_exists(plugin_dir_path(__FILE__) . 'inc/functions/video-sitemap/' . $seopress_sitemap_file)) {
-                $return_true ='';
-                $return_true = apply_filters('seopress_ob_end_flush_all', $return_true);
-
-                if (has_filter('seopress_ob_end_flush_all') && true == $return_true) {
-                    wp_ob_end_flush_all();
-                    exit();
-                }
-
-                include plugin_dir_path(__FILE__) . 'inc/functions/video-sitemap/' . $seopress_sitemap_file;
-                exit();
-            }
-        }
-
-        return $template;
     }
 }
 

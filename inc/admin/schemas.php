@@ -161,13 +161,13 @@ function seopress_schemas_maybe_render_blank_state($which)
 				),
 					'seopress_relaunch_upgrader'
 				)
-			
+
 			?>" class="btn btn-primary">
 				Reload upgrader schema
 			</a>
 			<?php
 		endif;
-		
+
 		if (0 < $count) {
 			return;
 		}
@@ -371,6 +371,7 @@ function seopress_schemas_cpt($post)
 			'Product meta (WooCommerce)' => [
 				'product_regular_price' => __('Regular Price', 'wp-seopress-pro'),
 				'product_sale_price'    => __('Sale Price', 'wp-seopress-pro'),
+				'product_price_with_tax'    => __('Sale Price with Tax', 'wp-seopress-pro'),
 				'product_date_from'     => __('Sale price dates "From"', 'wp-seopress-pro'),
 				'product_date_to'       => __('Sale price dates "To"', 'wp-seopress-pro'),
 				'product_sku'           => __('SKU', 'wp-seopress-pro'),
@@ -1049,7 +1050,7 @@ For best results, provide multiple high-resolution images (minimum of 50K pixels
 
 								<div class="wrap-rich-snippets-faq">';
 	echo '<p class="seopress-notice notice-info">' /* translators: %s: link documentation */ . sprintf(__('Learn more about the <strong>FAQ schema</strong> from the <a href="%s" target="_blank">Google official documentation website</a><span class="dashicons dashicons-external"></span>', 'wp-seopress-pro'), 'https://developers.google.com/search/docs/data-types/faqpage') . '</p>';
-	
+
 	if (function_exists('seopress_get_locale') && seopress_get_locale() =='fr') {
 		$seopress_docs_link['support']['schemas']['faq_acf'] = 'https://www.seopress.org/fr/support/guides/schema-faq-automatique-champs-repeteurs-acf/?utm_source=plugin&utm_medium=wp-admin&utm_campaign=seopress';
 	} else {

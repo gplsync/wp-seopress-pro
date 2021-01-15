@@ -18,14 +18,6 @@ class seopress_pro_options {
         add_action('admin_init', [$this, 'page_init']);
     }
 
-    public function activate() {
-        update_option($this->seopress_options, $this->data);
-    }
-
-    public function deactivate() {
-        delete_option($this->seopress_options);
-    }
-
     public function pro_set_default_values() {
         $seopress_pro_option_name = get_option('seopress_pro_option_name');
 
@@ -111,7 +103,7 @@ class seopress_pro_options {
 		<form method="post" action="<?php echo admin_url('options.php'); ?>" class="seopress-option">
 		<?php
         if (isset($_GET['settings-updated']) && 'true' === $_GET['settings-updated']) {
-            echo '<div class="components-snackbar-list"><div class="components-snackbar"><div class="components-snackbar__content"><span class="dashicons dashicons-yes"></span>' . __('Your settings has been saved.', 'wp-seopress-pro') . '</div></div></div>';
+            echo '<div class="sp-components-snackbar-list"><div class="sp-components-snackbar"><div class="sp-components-snackbar__content"><span class="dashicons dashicons-yes"></span>' . __('Your settings has been saved.', 'wp-seopress-pro') . '</div></div></div>';
         }
         echo '<div id="seopress-notice-save" style="display: none"><span class="dashicons dashicons-yes"></span><span class="html"></span></div>';
 
@@ -268,7 +260,7 @@ class seopress_pro_options {
 
 				<?php
                     if (isset($_GET['settings-updated']) && 'true' === $_GET['settings-updated']) {
-                        echo '<div class="components-snackbar-list"><div class="components-snackbar"><div class="components-snackbar__content"><span class="dashicons dashicons-yes"></span>' . __('Your settings has been saved.', 'wp-seopress-pro') . '</div></div></div>';
+                        echo '<div class="sp-components-snackbar-list"><div class="sp-components-snackbar"><div class="sp-components-snackbar__content"><span class="dashicons dashicons-yes"></span>' . __('Your settings has been saved.', 'wp-seopress-pro') . '</div></div></div>';
                     }
             echo '<div id="seopress-notice-save" style="display: none"><span class="dashicons dashicons-yes"></span><span class="html"></span></div>';
 
@@ -1684,10 +1676,14 @@ class seopress_pro_options {
         $this->print_pro_section('page-speed');
 
         if ( ! is_plugin_active('wp-rocket/wp-rocket.php')) {
-            echo '<p><a href="https://shareasale.com/r.cfm?b=1075949&u=1638109&m=74778&urllink=&afftrack=" target="_blank">' . __('We recommend WP Rocket caching plugin to quickly and easily optimize your WordPress site. Starting from just $49.', 'wp-seopress-pro') . '</a><span class="dashicons dashicons-external"></span></p>';
+            if (function_exists('seopress_get_toggle_white_label_option') && '1' != seopress_get_toggle_white_label_option()) {
+                echo '<p><a href="https://shareasale.com/r.cfm?b=1075949&u=1638109&m=74778&urllink=&afftrack=" target="_blank">' . __('We recommend WP Rocket caching plugin to quickly and easily optimize your WordPress site. Starting from just $49.', 'wp-seopress-pro') . '</a><span class="dashicons dashicons-external"></span></p>';
+            }
         }
 
-        echo '<p><a class="seopress-help" href="https://www.dareboost.com/en/home" target="_blank">' . __('Get an insightful audit of your website\'s quality for better performances with Dareboost.', 'wp-seopress-pro') . '</a><span class="seopress-help dashicons dashicons-external"></span></p>';
+        if (function_exists('seopress_get_toggle_white_label_option') && '1' != seopress_get_toggle_white_label_option()) {
+            echo '<p><a class="seopress-help" href="https://www.dareboost.com/en/home" target="_blank">' . __('Get an insightful audit of your website\'s quality for better performances with Dareboost.', 'wp-seopress-pro') . '</a><span class="seopress-help dashicons dashicons-external"></span></p>';
+        }
 
         echo '<button type="button" class="seopress-request-page-speed button button-primary" data_permalink="' . get_home_url() . '"><span class="dashicons dashicons-dashboard"></span>' . __('Analyse homepage with PageSpeed Insights', 'wp-seopress-pro') . '</button> ';
 
@@ -1791,6 +1787,8 @@ class seopress_pro_options {
             $seopress_docs_link['support']['google_analytics']['dashboard'] = 'https://www.seopress.org/support/guides/connect-wordpress-site-google-analytics/?utm_source=plugin&utm_medium=wp-admin&utm_campaign=seopress';
         }
         echo '<span class="seopress-help dashicons dashicons-external"></span><a class="seopress-help" href="' . $seopress_docs_link['support']['google_analytics']['dashboard'] . '" target="_blank">' . __('Watch our video guide to connect your WordPress site with Google Analytics API + common errors', 'wp-seopress-pro') . '</a></p>';
+
+        echo '<p>' . __('No stats in the dashboard widget? Make sure to have activated these 2 Google APIs from Google Console: <strong>Google Analytics API</strong> and <strong>Google Analytics Reporting API</strong>.', 'wp-seopress-pro') . '</p>';
     }
 
     /**
@@ -3835,7 +3833,6 @@ User-agent: SemrushBot-SA
             }
         }
 
-
         if ('' != seopress_google_analytics_auth_client_id_option()) {
             $client_id = seopress_google_analytics_auth_client_id_option();
         }
@@ -4082,4 +4079,172 @@ User-agent: SemrushBot-SA
 
 if (is_admin()) {
     $my_settings_page = new seopress_pro_options();
+}
+
+function seopress_get_redirection_pro_html() {
+    ?>
+    <div class="postbox section-tool">
+        <h3><span><?php _e('Import your redirections', 'wp-seopress'); ?></span></h3>
+        <select id="select-wizard-redirects" name="select-wizard-redirects">
+            <option value="none"><?php _e('Select an option', 'wp-seopress'); ?></option>
+            <option value="section-import-redirects"><?php _e('CSV file (must match the template)', 'wp-seopress'); ?></option>
+            <option value="section-import-redirects-plugin"><?php _e('Redirections plugin (JSON - WordPress Redirects)', 'wp-seopress'); ?></option>
+            <option value="section-import-yoast-redirects"><?php _e('Yoast Premium plugin (CSV)', 'wp-seopress'); ?></option>
+            <option value="section-import-rk-redirects"><?php _e('Rank Math plugin (TXT)', 'wp-seopress'); ?></option>
+        </select>
+        <br><br>
+    </div>
+    <div id="section-import-redirects" class="postbox section-tool">
+        <div class="inside">
+            <h3><span><?php _e('Import Redirections', 'wp-seopress'); ?></span></h3>
+            <p><?php _e('Import your own redirections from a .csv file (separator ";"). You must have these columns in this order:', 'wp-seopress'); ?>
+                <ul>
+                    <li><?php _e('URL to match (without your domain name)', 'wp-seopress'); ?></li>
+                    <li><?php _e('URL to redirect in absolute,', 'wp-seopress'); ?></li>
+                    <li><?php _e('type of redirection (301, 302 or 307, 410, 451),', 'wp-seopress'); ?></li>
+                    <li><?php _e('Yes to enable the redirect (leave it empty to disable the redirect)', 'wp-seopress'); ?></li>
+                    <li><?php _e('the query parameter without the quotes ("exact_match" = Exact match with all parameters, "without_param" = Exclude all parameters or "with_ignored_param" = Exclude all parameters and pass them to the redirection),', 'wp-seopress'); ?></li>
+                    <li><?php _e('the counter (optional),', 'wp-seopress'); ?></li>
+                    <li><?php _e('and, the last parameter, category redirect IDs separated by commas (optional).', 'wp-seopress'); ?></li>
+                </ul>
+            </p>
+            <p>
+                <a href="https://www.seopress.org/wp-content/uploads/csv/seopress-redirections-example.csv" target="_blank">
+                    <?php _e('Download a CSV example', 'wp-seopress'); ?>
+                </a>
+            </p>
+            <p><?php _e('Duplicate entries will be automatically removed during import.', 'wp-seopress'); ?></p>
+            <p><strong><?php _e('Select your separator:', 'wp-seopress'); ?></strong></p>
+            <form method="post" enctype="multipart/form-data">
+                <p>
+                    <input id="import_sep_comma" name="import_sep" type="radio" value="comma"/>
+                    <label for="import_sep_comma"><?php _e('Comma separator: "<strong>,</strong>"', 'wp-seopress'); ?></label>
+                </p>
+                <p>
+                    <input id="import_sep_semicolon" name="import_sep" type="radio" value="semicolon"/>
+                    <label for="import_sep_semicolon"><?php _e('Semicolon separator: "<strong>;</strong>"', 'wp-seopress'); ?></label>
+                </p>
+                <p>
+                    <input type="file" name="import_file"/>
+                </p>
+                <p>
+                    <input type="hidden" name="seopress_action" value="import_redirections_settings" />
+                    <?php wp_nonce_field('seopress_import_redirections_nonce', 'seopress_import_redirections_nonce'); ?>
+                    <?php submit_button(__('Import', 'wp-seopress'), 'secondary', 'submit', false); ?>
+                </p>
+            </form>
+        </div><!-- .inside -->
+    </div><!-- .postbox -->
+    <div id="section-import-redirects-plugin" class="postbox section-tool">
+        <div class="inside">
+            <h3><span><?php _e('Import Redirections from the Redirections plugin', 'wp-seopress'); ?></span></h3>
+            <p><?php _e('Import your own redirections from a .json file generated by the Redirections plugin (make sure to select <strong>"WordPress redirects"</strong> when you export your file). Note that we do not support certain options, like regex. To avoid conflicts, make sure there are no duplicates between your file and existing redirects.', 'wp-seopress'); ?></p>
+            <form method="post" enctype="multipart/form-data">
+                <p>
+                    <input type="file" name="import_file"/>
+                </p>
+                <p>
+                    <input type="hidden" name="seopress_action" value="import_redirections_plugin_settings" />
+                    <?php wp_nonce_field('seopress_import_redirections_plugin_nonce', 'seopress_import_redirections_plugin_nonce'); ?>
+                    <?php submit_button(__('Import', 'wp-seopress'), 'secondary', 'submit', false); ?>
+                </p>
+            </form>
+        </div><!-- .inside -->
+    </div><!-- .postbox -->
+    <div id="section-import-yoast-redirects" class="postbox section-tool">
+        <div class="inside">
+            <h3><span><?php _e('Import Redirections from Yoast Premium', 'wp-seopress'); ?></span></h3>
+            <p><?php _e('Import your own redirections from a .csv file generated by Yoast Premium. Note that we don\'t support certain options, like regex. To avoid conflicts, make sure there are no duplicates between your file and existing redirects.', 'wp-seopress'); ?></p>
+            <form method="post" enctype="multipart/form-data">
+                <p>
+                    <input type="file" name="import_file"/>
+                </p>
+                <p>
+                    <input type="hidden" name="seopress_action" value="import_yoast_redirections" />
+                    <?php wp_nonce_field('seopress_import_yoast_redirections_nonce', 'seopress_import_yoast_redirections_nonce'); ?>
+                    <?php submit_button(__('Import', 'wp-seopress'), 'secondary', 'submit', false); ?>
+                </p>
+            </form>
+        </div><!-- .inside -->
+    </div><!-- .postbox -->
+    <div id="section-import-rk-redirects" class="postbox section-tool">
+        <div class="inside">
+            <h3><span><?php _e('Import Redirections from Rank Math', 'wp-seopress'); ?></span></h3>
+            <p><?php _e('Import your own redirections from a .txt file generated by Rank Math. Note that we don\'t support certain options, like regex. To avoid conflicts, make sure there are no duplicates between your file and existing redirects.', 'wp-seopress'); ?></p>
+            <form method="post" enctype="multipart/form-data">
+                <p>
+                    <input type="file" name="import_file"/>
+                </p>
+                <p>
+                    <input type="hidden" name="seopress_action" value="import_rk_redirections" />
+                    <?php wp_nonce_field('seopress_import_rk_redirections_nonce', 'seopress_import_rk_redirections_nonce'); ?>
+                    <?php submit_button(__('Import', 'wp-seopress'), 'secondary', 'submit', false); ?>
+                </p>
+            </form>
+        </div><!-- .inside -->
+    </div><!-- .postbox -->
+    <div id="section-export-redirects" class="postbox section-tool">
+        <div class="inside">
+            <h3><span><?php _e('Export Redirections', 'wp-seopress'); ?></span></h3>
+            <p><?php _e('Export all redirections for this site as a .csv file. This allows you to easily import the redirections into another site, to Excel / Google Sheets...', 'wp-seopress'); ?></p>
+            <form method="post">
+                <p><input type="hidden" name="seopress_action" value="export_redirections" /></p>
+                <p>
+                    <?php wp_nonce_field('seopress_export_redirections_nonce', 'seopress_export_redirections_nonce'); ?>
+                    <?php submit_button(__('Export', 'wp-seopress'), 'secondary', 'submit', false); ?>
+                </p>
+            </form>
+        </div><!-- .inside -->
+    </div><!-- .postbox -->
+    <div id="section-export-redirects-htaccess" class="postbox section-tool">
+        <div class="inside">
+            <h3><span><?php _e('Export Redirections for an .htaccess file', 'wp-seopress'); ?></span></h3>
+            <p><?php _e('Export all redirects from this site to a txt file. Then copy and paste the formatted URLs into your .htaccess file.', 'wp-seopress'); ?></p>
+            <p><?php _e('Only active redirections will be exported.', 'wp-seopress'); ?></p>
+            <p><?php _e('Save your .htaccess file before editing it. <strong>Safety first!</strong>', 'wp-seopress'); ?></p>
+            <p><?php _e('Do not forget to test every redirects!', 'wp-seopress'); ?></p>
+            <form method="post">
+                <p><input type="hidden" name="seopress_action" value="export_redirections_htaccess" /></p>
+                <p>
+                    <?php wp_nonce_field('seopress_export_redirections_htaccess_nonce', 'seopress_export_redirections_htaccess_nonce'); ?>
+                    <?php submit_button(__('Export', 'wp-seopress'), 'secondary', 'submit', false); ?>
+                </p>
+            </form>
+        </div><!-- .inside -->
+    </div><!-- .postbox -->
+    <div id="section-clean-404" class="postbox section-tool">
+        <div class="inside">
+            <h3><span><?php _e('Clean your 404', 'wp-seopress'); ?></span></h3>
+            <p><?php _e('Delete all your 404 errors. We don‘t delete any redirects.', 'wp-seopress'); ?></p>
+            <p class="seopress-help"><?php
+            if (function_exists('seopress_get_locale') && 'fr' == seopress_get_locale()) {
+                $seopress_docs_link['support']['redirects']['query'] = 'https://www.seopress.org/fr/support/guides/nettoyez-vos-erreurs-404-a-laide-dune-requete-mysql/?utm_source=plugin&utm_medium=wp-admin&utm_campaign=seopress';
+            } else {
+                $seopress_docs_link['support']['redirects']['query'] = 'https://www.seopress.org/support/guides/delete-your-404-errors-with-a-mysql-query/?utm_source=plugin&utm_medium=wp-admin&utm_campaign=seopress';
+            }
+    echo sprintf(__('You can also use <span class="dashicons dashicons-external"></span><a href="%s" target="_blank">this MySQL query</a> if necessary.', 'wp-seopress'), $seopress_docs_link['support']['redirects']['query']); ?></p>
+            <form method="post">
+                <p><input type="hidden" name="seopress_action" value="clean_404" /></p>
+                <p>
+                    <?php wp_nonce_field('seopress_clean_404_nonce', 'seopress_clean_404_nonce'); ?>
+                    <?php submit_button(__('Delete all 404', 'wp-seopress'), 'secondary', 'submit', false); ?>
+                </p>
+            </form>
+        </div><!-- .inside -->
+    </div><!-- .postbox -->
+    <div id="section-clean-redirects" class="postbox section-tool">
+        <div class="inside">
+            <h3><span><?php _e('Clean all your redirects and 404 errors', 'wp-seopress'); ?></span></h3>
+            <p><?php _e('Delete all your 301, 302, 307, 404, 410 and 451 entries.', 'wp-seopress'); ?></p>
+            <p style="color:red"><span class="dashicons dashicons-info"></span> <?php _e('<strong>WARNING:</strong> Backup your database before deletion. Safety FIRST!', 'wp-seopress'); ?></p>
+            <form method="post">
+                <p><input type="hidden" name="seopress_action" value="clean_all" /></p>
+                <p>
+                    <?php wp_nonce_field('seopress_clean_all_nonce', 'seopress_clean_all_nonce'); ?>
+                    <?php submit_button(__('Delete', 'wp-seopress'), 'secondary', 'submit', false); ?>
+                </p>
+            </form>
+        </div><!-- .inside -->
+    </div><!-- .postbox -->
+    <?php
 }

@@ -6,7 +6,7 @@ Tags: SEO, XML sitemap, meta title, open graph, content analysis, knowledge grap
 Requires at least: 4.7+
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 4.2.2
+Stable tag: 4.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,7 +48,7 @@ SEOPress is a powerful WordPress SEO plugin to optimize your SEO, boost your tra
 	<li><strong>Open Graph and Twitter Cards</strong> to improve social media sharing (Facebook, LinkedIn, Instagram, Twitter, Pinterest, WhatsApp...)</li>
 	<li><strong>Google Knowledge Graph</strong></li>
 	<li><a href="https://www.seopress.org/features/google-analytics/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme"><strong>Google Analytics</strong> and <strong>Matomo</strong></a> with downloads tracking, custom dimensions, ip anonymization, remarketing, demographics and interest reporting, cross-domain tracking...(<a href="https://www.seopress.org/features/seopress-white-label/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme" target="_blank">GDPR compatibility</a>)</li>
-	<li><strong>Custom Canonical URL</strong></li> 
+	<li><strong>Custom Canonical URL</strong></li>
 	<li><a href="https://www.seopress.org/support/guides/manage-meta-robots/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme"><strong>Meta robots</strong></a> (noindex, nofollow, noodp, noimageindex, noarchive, nosnippet)</li>
 	<li>Build your <a href="https://www.seopress.org/features/sitemaps/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme"><strong>custom XML Sitemap</strong></a> to improve search indexing</li>
 	<li><strong>Image XML Sitemaps</strong> to improve search indexing for Google Images</li>
@@ -73,7 +73,7 @@ SEOPress is a powerful WordPress SEO plugin to optimize your SEO, boost your tra
 	<li><a href="https://www.seopress.org/support/guides/import-metadata-from-a-csv-file-with-seopress-pro/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme"><strong>Import / export metadata</strong></a> (titles, open graph, robots...) from / to CSV file</li>
 	<li><a href="https://www.seopress.org/features/sitemaps/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme"><strong>Video XML Sitemap</strong></a> to improve rankings in video search results</li>
 	<li><strong>Google Suggestions in Content Analysis</strong> to find the top 10 Google suggestions instantly. This is useful if you want to work with the long tail technique.</li>
-	<li><a href="https://www.seopress.org/features/google-structured-data-types/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme" target="_blank"><strong>Google Structured Data types</strong> (schema.org)</a>: 
+	<li><a href="https://www.seopress.org/features/google-structured-data-types/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme" target="_blank"><strong>Google Structured Data types</strong> (schema.org)</a>:
 		<ol>
 			<li>article schema</li>
 			<li>local business schema</li>
@@ -318,123 +318,30 @@ You're theme is probably using a deprecated function to handle the title. <a hre
 8. Installation Wizard
 
 == Changelog ==
-= 4.2.2 (7/01/2021) =
+= 4.3 (14/01/2021) =
+* NEW PHP 8 compatibility
+* NEW "Disable notifications on slug changes or post deletions" option from SEO, PRO, 404/301 tab (PRO)
+* NEW "Canonical URL" check added to content analysis
+* NEW Quickly enable/disable noindex/nofollow using Quick Edit feature from post lists
+* NEW Import Primary Category with our CSV import tool (PRO)
+* NEW Add a new field for automatic schema to get product price with taxes (PRO)
+* INFO Refactoring XML sitemaps feature to avoid conflicts with other plugins / themes
+* INFO Improve configuration wizard
+* INFO Improve design and accessibility for SEO columns from post lists
+* INFO Remove recommended links if White Label is enabled
+* INFO Improve UI / UX
+* INFO Strengthening security
+* INFO "seopress_sitemaps_single_img" filter can now be used without adding images to post content
+* INFO Converting Rank Math dynamic variables on migration
 * FIX Google Analysis stats in dashboard widget
-= 4.2.1 (17/12/2020) =
-* INFO Improve accessibility
-* INFO Improve PHP compatibility with version < 7.0
-* FIX Fatal error “register_block_type” with WP < 5.0
-* FIX Manual custom schema saving
-* FIX i18n updater
-= 4.2 = <a href="https://www.seopress.org/blog/unlimited-manual-schemas-google-analytics-v4-seopress-4-2/">Read our blog post update</a>
-* NEW WordPress 5.6 compatibility 🎉
-* NEW Unlimited manual schemas per post / page / post type (PRO) 🎉
-* NEW Google Analytics v4 compatibility 🎉
-* NEW FAQ block (with schema) for Block Editor (Gutenberg) 🎉
-* NEW CRON to request Google Analytics stats in WP Dashboard hourly to improve performance (PRO)
-* NEW 'seopress_gtag_ga4' hook to filter Google Analytics measurement ID (https://www.seopress.org/support/hooks/filter-measurement-id-for-google-analytics-v4/)
-* NEW 'seopress_matomo_no_heatmaps' hook to filter heatmaps and session recordings deactivation for Matomo (https://www.seopress.org/support/hooks/disable-heatmaps-and-session-recordings-for-matomo/)
-* NEW Automatically add Oxygen images to XML Image sitemaps
-* NEW Disable heatmaps and session recordings option for Matomo
-* NEW Make Local Business and Rich snippet publisher logo options translatable with WPML and Polylang
-* NEW 'seopress_sitemaps_home_url' hook to filter home_url in XSL (sitemaps stylesheet) (https://www.seopress.org/support/hooks/filter-home_url-in-xml-sitemaps/)
-* INFO Change stats in dashboard frequency update from 1 to 2 hours
-* INFO Add visual feedback when saving settings
-* INFO Automatically remove SEOPress from EDD customer_discount post type
-* INFO Remove Oxygen metabox from Redirections and Schemas post types
-* FIX Change "Thing" to "Brand" for Brand property in Product schema
-* FIX 403 error on cookie bar Ajax request
-* FIX Error: Uncaught exception 'Error' with message 'Call to a member function get_id() on bool' 
-* FIX Uncaught Error: Call to undefined function seopress_local_business_page_option() in specific cases
-* FIX Compatibility issue with MalCure plugin
-* FIX Warning: Invalid argument supplied for foreach() in template-xml-sitemaps-single-term.php on line 69
-* FIX Enhanced Ecommerce tracking by adding order status check
-* FIX Title and meta description templates for Author archives with no posts (props @wpchannel)
-* FIX White label hide SEOPress' links option
-* FIX Video sitemap issue
-= 4.1.6 =
-* NEW Import your redirect categories when importing redirects from CSV file
-* NEW 'seopress_sitemaps_home_url' hook to filter home_url in XML sitemaps (https://www.seopress.org/support/hooks/filter-home_url-in-xml-sitemaps/)
-* INFO Add a link to find your Google Ads conversion ID (https://www.seopress.org/support/guides/how-to-find-your-google-ads-conversions-id/?utm_source=plugin&utm_medium=wp-admin&utm_campaign=seopress)
-* INFO Add a link to create an automatic FAQ schema with ACF repeater field (https://www.seopress.org/support/guides/create-an-automatic-faq-schema-with-acf-repeater-fields/)
-* INFO Delete 404 errors manually even if enable 404 cleaning CRON is disabled (it was too confusing for the users)
-* FIX Revert: Exclude posts and terms from XML sitemaps if custom canonical URL set from SEO metabox
-= 4.1.5.1 =
-* FIX DomDocument issue if "Automatically set the image Alt text from target keywords option" is enabled
-= 4.1.5 =
-* NEW Google Place ID field for Local Business Widget (SEO, PRO, Local Business) to display POI when clicking on the map link (PRO)
-* INFO Exclude posts and terms from XML sitemaps if custom canonical URL set from SEO metabox
-* FIX Empty Term taxonomy XML paginated sitemap
-* FIX Fatal error: Uncaught Error: Call to undefined function seopress_get_option_post_need_redirects() if filter 'seopress_post_automatic_redirect' used
-* FIX White label custom website for SEOPress PRO
-* FIX Conflict with WPML
-* FIX Bulk editing for 404 errors, 'delete_redirections' capability was missing
-* FIX Global LocalBusiness schema
-* FIX DomDocument issue if "Automatically set the image Alt text from target keywords" is enabled (thanks to Emilien Degert)
-= 4.1.4 =
-* INFO Improve cookie bar default design
-* INFO Update NGINX configuration informations on XML sitemaps page
-* INFO Update updater to support automatic updates
-* FIX Google suggestions to target keywords field
-* FIX Tagify not defined in term taxonomy editing page
-* FIX Conflict with BuddyBoss search page
-* FIX Notice Trying to get property 'name' of non-object 5 in options-titles-metas.php
-* FIX Notice Undefined offset in options-titles-metas.php
-= 4.1.3 =
-* FIX PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Elementor\Core\Settings\Page\Manager::ajax_before_save_settings() must be of the type array, null given
-* FIX Delete bulk edit option for Redirections
-= 4.1.2 =
-* INFO Label for breadcrumbs in Elementor
-* FIX Elementor content analysis
-* FIX Display incorrect information from admin bar
-* FIX Warning: Use of undefined constant SEOPRESS_PRO_VERSION
-= 4.1.1 =
-* NEW Add "Text alignment" option for cookie bar
-* INFO Improved cookie bar design
-* FIX Redirections capabilities
-* FIX Elementor compatibility
-* FIX Fatal error with PHP <= 7.3
-* FIX Notice: Trying to get property 'post_type' of non-object in /wp-content/plugins/wp-seopress/inc/admin/adminbar.php on line 68
-= 4.1 =
-* NEW Add FAQ schema to Toggle / Accordion widgets with Elementor (PRO) 🎉
-* NEW Dropdown for meta title / meta description to quickly add dynamic variables! 🎉
-* NEW UI for adding/editing/managing target keywords 🎉
-* NEW Paginated XML sitemaps for taxonomies and videos 🎉
-* NEW Import term metadata from CSV file using our import tool (PRO) 🎉
-* NEW Custom user capabilities for Redirections post type (edit_redirection, edit_redirections, edit_others_redirections, publish_redirections, read_redirection, read_private_redirections, delete_redirection, delete_redirections, delete_others_redirections, delete_published_redirections)
-* NEW Remove noindex item from Admin Bar in backend and frontend option from SEO, Advanced page, Appearance tab
-* NEW Change expiration date of the user consent cookie option from SEO, Analytics page, Cookie bar / GDPR tab
-* NEW Add servesCuisine for LocalBusiness automatic schema
-* NEW Delete all redirects / 404 in one click (SEO, Tools, Redirections)
-* NEW Add a backdrop for user consent message (SEO, Analytics, Cookie bar / GDPR tab)
-* NEW 'seopress_adminbar_noindex' hook to filter the noindex alert from WP admin bar (https://www.seopress.org/support/hooks/filter-noindex-alert-html-from-admin-bar/)
-* NEW 'seopress_cookies_expiration_days' hook to filter the expiration date of the user consent cookie (https://www.seopress.org/support/hooks/filter-the-expiration-date-of-the-user-consent-cookie/)
-* NEW 'seopress_sitemaps_max_terms_per_sitemap' hook to filter max terms per paginated sitemap (https://www.seopress.org/support/hooks/filter-max-terms-per-paginated-sitemap/)
-* NEW 'seopress_sitemaps_max_videos_per_sitemap' hook to filter max videos per paginated sitemap (https://www.seopress.org/support/hooks/filter-max-videos-per-paginated-sitemap/)
-* NEW 'seopress_sitemaps_index_video_query' hook to filter video index sitemap query (https://www.seopress.org/support/hooks/filter-video-index-sitemap-query/)
-* NEW 'seopress_sitemaps_index_post_types_query' hook to filter post types query in XML sitemap (https://www.seopress.org/support/hooks/filter-custom-post-type-index-xml-sitemap-query/)
-* NEW 'seopress_metadata_query_terms_args' hook to filter term query from export metadata tool (https://www.seopress.org/support/hooks/filter-the-arguments-of-the-metadata-terms-export-query/)
-* INFO Improve Local Business compatibility with Elementor, Beaver builder...
-* INFO Add a link to Advanced global meta robots page on noindex alert from admin bar
-* INFO Improve White Label
-* INFO Improve UI for automatic schemas
-* INFO Remove SEOPress logo from 404 email alert
-* INFO Improve notice in admin bar about global noindex / nofollow and add support for Taxonomies
-* INFO Add a link to the publisher logo notice
-* INFO Improved detection of social media metadata in source code for content analysis
-* INFO Add Alpha option to color-picker on backgrounds for Cookie bar (SEO, Analytics, Cookie bar / GDPR tab)
-* INFO Improved Performances for XML sitemaps
-* INFO Refactoring hundreds lines of code
-* FIX Trailing slash for rel/prev meta tag
-* FIX Trailing slash for XML sitemaps
-* FIX Published/modified date in automatic schemas for non-english date format
-* FIX Closing notification "Your site is not visible to Search Engines!"
-* FIX Conflict with Elementor
-* FIX Remove AM/PM from Local Business Widget
-* FIX FAQ questions counter from schema metabox
-* FIX Price range LocalBusiness property with custom fields for automatic schema
-* FIX Remove BuddyPress groups from Titles and settings if BuddyBoss or BuddyPress is not activated
-* FIX WooCommerce XML sitemaps product attributes
-* FIX Quotes with target keywords
+* FIX "Show content analysis score column in post types" option from SEO, Advanced, Appearance tab
+* FIX "Set default tab for Structured data metabox" option from SEO, Advanced, Appearance tab
+* FIX Password protected page meta
+* FIX Cookie bar backdrop
+* FIX RSS after/before content
+* FIX noindex on WooCommerce pages if WC toggle off
+* FIX Block editor notification on post save
+* FIX Conflict with Post Type Order plugin
+* FIX Notice: trying to get property "name" of non-object
 
 <a href="https://www.seopress.org/changelog/" target="_blank">View complete changelog</a>
