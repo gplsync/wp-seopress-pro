@@ -536,6 +536,8 @@ function seopress_request_google_analytics() {
             $ga_account   = 'ga:' . seopress_google_analytics_auth_option();
             $redirect_uri = admin_url('admin.php?page=seopress-google-analytics');
 
+            require_once SEOPRESS_PRO_PLUGIN_DIR_PATH . '/vendor/autoload.php';
+
             $client = new Google_Client();
             $client->setApplicationName('Client_Library_Examples');
             $client->setClientId($client_id);
@@ -884,7 +886,7 @@ function seopress_request_google_analytics() {
                 $seopress_results_google_analytics_cache['sessions']                = array_sum($all[0]['sessions']);
                 $seopress_results_google_analytics_cache['users']                   = array_sum($all[0]['users']);
                 $seopress_results_google_analytics_cache['pageviews']               = array_sum($all[0]['pageviews']);
-                $seopress_results_google_analytics_cache['pageviewsPerSession']     = round(array_sum($all[0]['pageviewsPerSession']), 2);
+                $seopress_results_google_analytics_cache['pageviewsPerSession']     = round(array_sum($all[0]['pageviewsPerSession']) / count($all[0]['pageviewsPerSession']), 2);
                 $seopress_results_google_analytics_cache['avgSessionDuration']      = gmdate('i:s', array_sum($all[0]['avgSessionDuration']) / count($all[0]['avgSessionDuration']));
                 $seopress_results_google_analytics_cache['bounceRate']              = round(array_sum($all[0]['bounceRate']) / count($all[0]['bounceRate']), 2);
                 $seopress_results_google_analytics_cache['percentNewSessions']      = round(array_sum($all[0]['percentNewSessions']) / count($all[0]['percentNewSessions']), 2);

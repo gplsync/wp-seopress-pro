@@ -371,7 +371,7 @@ function seopress_schemas_cpt($post)
 			'Product meta (WooCommerce)' => [
 				'product_regular_price' => __('Regular Price', 'wp-seopress-pro'),
 				'product_sale_price'    => __('Sale Price', 'wp-seopress-pro'),
-				'product_price_with_tax'    => __('Sale Price with Tax', 'wp-seopress-pro'),
+				'product_price_with_tax'    => __('Sales price, including tax', 'wp-seopress-pro'),
 				'product_date_from'     => __('Sale price dates "From"', 'wp-seopress-pro'),
 				'product_date_to'       => __('Sale price dates "To"', 'wp-seopress-pro'),
 				'product_sku'           => __('SKU', 'wp-seopress-pro'),

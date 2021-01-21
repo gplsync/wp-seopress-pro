@@ -4,7 +4,7 @@ Plugin Name: SEOPress PRO
 Plugin URI: https://www.seopress.org/seopress-pro/
 GitHub Plugin URI: https://github.com/gplsync/wp-seopress-pro/
 Description: The PRO version of SEOPress. SEOPress required (free).
-Version: 4.3.0
+Version: 4.3.0.2
 Author: SEOPress
 Author URI: https://www.seopress.org/seopress-pro/
 License: GPLv2
@@ -78,7 +78,8 @@ function seopress_pro_activation() {
             activate_plugins('wp-seopress/seopress.php');
         }
         add_option('seopress_pro_activated', 'yes');
-    	update_option( 'seopress_pro_license_status', 'valid');
+        update_option('seopress_pro_license_key', 'GPL001122334455AA6677BB8899CC000'); 
+    update_option('seopress_pro_license_status', 'valid');
 
         flush_rewrite_rules(false);
 
@@ -141,7 +142,7 @@ function seopress_pro_uninstall() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //Define
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-define('SEOPRESS_PRO_VERSION', '4.3.0');
+define('SEOPRESS_PRO_VERSION', '4.3.0.2');
 define('SEOPRESS_PRO_AUTHOR', 'Benjamin Denis');
 define('STORE_URL_SEOPRESS', 'https://www.seopress.org');
 define('ITEM_ID_SEOPRESS', 113);
@@ -151,9 +152,11 @@ define('SEOPRESS_PRO_PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 use SEOPressPro\Core\Kernel;
 
+require_once __DIR__ . '/seopress-autoload.php';
+
 if (file_exists(__DIR__ . '/vendor/autoload.php') && file_exists(WP_PLUGIN_DIR . '/wp-seopress/vendor/autoload.php')) {
     require_once WP_PLUGIN_DIR . '/wp-seopress/vendor/autoload.php';
-    require_once __DIR__ . '/vendor/autoload.php';
+
     Kernel::execute([
         'file'      => __FILE__,
         'slug'      => 'wp-seopress-pro',

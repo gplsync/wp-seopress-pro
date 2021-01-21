@@ -3844,6 +3844,7 @@ User-agent: SemrushBot-SA
         $redirect_uri = admin_url('admin.php?page=seopress-google-analytics');
 
         if ('' != seopress_google_analytics_auth_client_id_option() && '' != seopress_google_analytics_auth_secret_id_option()) {
+            require_once SEOPRESS_PRO_PLUGIN_DIR_PATH . '/vendor/autoload.php';
             $client = new Google_Client();
             $client->setApplicationName('Client_Library_Examples');
             $client->setClientId($client_id);

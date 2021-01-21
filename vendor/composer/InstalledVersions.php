@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '4243eba893759254021636f2730161ef8ce98767',
+    'reference' => '8699e8bf104020f81198a8a9741d91b621b3c046',
     'name' => 'wp-seopress/wp-seopress',
   ),
   'versions' => 
@@ -45,21 +45,21 @@ private static $installed = array (
     ),
     'google/apiclient' => 
     array (
-      'pretty_version' => 'v2.8.3',
-      'version' => '2.8.3.0',
+      'pretty_version' => 'v2.9.1',
+      'version' => '2.9.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '81696e6206322e38c643cfcc96c4494ccfef8a32',
+      'reference' => '2fb6e702aca5d68203fa737f89f6f774022494c6',
     ),
     'google/apiclient-services' => 
     array (
-      'pretty_version' => 'v0.156',
-      'version' => '0.156.0.0',
+      'pretty_version' => 'v0.157.0',
+      'version' => '0.157.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2f5e54fdef034f856208328126bddd8376dae4b3',
+      'reference' => '957846303c28c10033fa83d8688ffd325c260a3e',
     ),
     'google/auth' => 
     array (
@@ -106,6 +106,15 @@ private static $installed = array (
       ),
       'reference' => '2209ddd84e7ef1256b7af205d0717fb62cfc9c33',
     ),
+    'paragonie/constant_time_encoding' => 
+    array (
+      'pretty_version' => 'v1.0.4',
+      'version' => '1.0.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2132f0f293d856026d7d11bd81b9f4a23a1dc1f6',
+    ),
     'paragonie/random_compat' => 
     array (
       'pretty_version' => 'v2.0.19',
@@ -117,12 +126,12 @@ private static $installed = array (
     ),
     'phpseclib/phpseclib' => 
     array (
-      'pretty_version' => '2.0.30',
-      'version' => '2.0.30.0',
+      'pretty_version' => '3.0.3',
+      'version' => '3.0.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => '136b9ca7eebef78be14abf90d65c5e57b6bc5d36',
+      'reference' => '97a5a270e4a9ebfc1a7e2f462e917cbce1a8e6d9',
     ),
     'psr/cache' => 
     array (
@@ -217,7 +226,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '4243eba893759254021636f2730161ef8ce98767',
+      'reference' => '8699e8bf104020f81198a8a9741d91b621b3c046',
     ),
   ),
 );
