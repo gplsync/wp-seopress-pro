@@ -72,7 +72,12 @@ class seopress_pro_options {
             $sp_seo_admin_menu['icon'] = 'dashicons-admin-seopress';
         }
 
-        add_menu_page(__('SEO Network settings', 'wp-seopress-pro'), 'SEO', seopress_capability('manage_options', 'menu'), 'seopress-network-option', [$this, 'create_network_admin_page'], $sp_seo_admin_menu['icon'], 90);
+        $sp_seo_admin_menu['title'] = __('SEO', 'wp-seopress');
+        if (has_filter('seopress_seo_admin_menu_title')) {
+            $sp_seo_admin_menu['title'] = apply_filters('seopress_seo_admin_menu_title', $sp_seo_admin_menu['title']);
+        }
+
+        add_menu_page(__('SEO Network settings', 'wp-seopress-pro'), $sp_seo_admin_menu['title'], seopress_capability('manage_options', 'menu'), 'seopress-network-option', [$this, 'create_network_admin_page'], $sp_seo_admin_menu['icon'], 90);
     }
 
     public function add_plugin_page() {
@@ -193,7 +198,7 @@ class seopress_pro_options {
         } ?>" id="tab_seopress_page_speed"><?php do_settings_sections('seopress-settings-admin-page-speed'); ?></div>
 
 			<!-- Robots -->
-			<?php if ( ! defined('SUBDOMAIN_INSTALL') || (defined('SUBDOMAIN_INSTALL') && true === constant('SUBDOMAIN_INSTALL'))) { //if multisite sub-domains?>
+			<?php if ( ! defined('SUBDOMAIN_INSTALL') || (defined('SUBDOMAIN_INSTALL') && true === constant('SUBDOMAIN_INSTALL'))) { //if multisite sub-domains ?>
 				<div class="seopress-tab <?php if ('tab_seopress_robots' == $current_tab) {
             echo 'active';
         } ?>" id="tab_seopress_robots"><?php do_settings_sections('seopress-settings-admin-robots'); ?></div>
@@ -297,7 +302,7 @@ class seopress_pro_options {
             echo '</div>'; ?>
 
 					<!-- Robots -->
-					<?php if (defined('SUBDOMAIN_INSTALL') && false === constant('SUBDOMAIN_INSTALL')) {//if subdirectories?>
+					<?php if (defined('SUBDOMAIN_INSTALL') && false === constant('SUBDOMAIN_INSTALL')) {//if subdirectories ?>
 						<div class="seopress-tab <?php if ('tab_seopress_robots' == $current_tab) {
                 echo 'active';
             } ?>" id="tab_seopress_robots"><?php do_settings_sections('seopress-mu-settings-admin-robots'); ?></div>
@@ -1177,6 +1182,14 @@ class seopress_pro_options {
             );
 
             add_settings_field(
+                'seopress_mu_white_label_admin_title', // ID
+                __('Edit SEOPress title in main menu', 'wp-seopress-pro'), // Title
+                [$this, 'seopress_mu_white_label_admin_title_callback'], // Callback
+                'seopress-mu-settings-admin-white-label', // Page
+                'seopress_mu_setting_section_white_label' // Section
+            );
+
+            add_settings_field(
                 'seopress_mu_white_label_admin_bar_logo', // ID
                 __('Add your custom logo in SEOPress admin header', 'wp-seopress-pro'), // Title
                 [$this, 'seopress_white_label_admin_bar_logo_callback'], // Callback
@@ -1293,6 +1306,14 @@ class seopress_pro_options {
                 'seopress_white_label_admin_bar_icon', // ID
                 __('Edit SEOPress item in admin bar', 'wp-seopress-pro'), // Title
                 [$this, 'seopress_white_label_admin_bar_icon_callback'], // Callback
+                'seopress-settings-admin-white-label', // Page
+                'seopress_setting_section_white_label' // Section
+            );
+
+            add_settings_field(
+                'seopress_white_label_admin_title', // ID
+                __('Edit SEOPress title in main menu', 'wp-seopress-pro'), // Title
+                [$this, 'seopress_white_label_admin_title_callback'], // Callback
                 'seopress-settings-admin-white-label', // Page
                 'seopress_setting_section_white_label' // Section
             );
@@ -1970,155 +1991,8 @@ class seopress_pro_options {
         $selected = isset($options['seopress_local_business_type']) ? $options['seopress_local_business_type'] : null;
 
         echo '<select id="seopress_local_business_type" name="seopress_pro_option_name[seopress_local_business_type]">';
-        $seopress_lb_types = [
-                    'LocalBusiness'               => 'Local Business (default)',
-                    'AnimalShelter'               => 'Animal Shelter',
-                    'AutomotiveBusiness'          => 'Automotive Business',
-                    'AutoBodyShop'                => '|-Auto Body Shop',
-                    'AutoDealer'                  => '|-Auto Dealer',
-                    'AutoPartsStore'              => '|-Auto Parts Store',
-                    'AutoRental'                  => '|-Auto Rental',
-                    'AutoRepair'                  => '|-Auto Repair',
-                    'Auto Wash'                   => '|-AutoWash',
-                    'GasStation'                  => '|-Gas Station',
-                    'MotorcycleDealer'            => '|-Motorcycle Dealer',
-                    'MotorcycleRepair'            => '|-Motorcycle Repair',
-                    'ChildCare'                   => 'Child Care',
-                    'Dentist'                     => 'Dentist',
-                    'DryCleaningOrLaundry'        => 'Dry Cleaning Or Laundry',
-                    'EmergencyService'            => 'Emergency Service',
-                    'FireStation'                 => '|-Fire Station',
-                    'Hospital'                    => '|-Hospital',
-                    'PoliceStation'               => '|-Police Station',
-                    'EmploymentAgency'            => 'Employment Agency',
-                    'EntertainmentBusiness'       => 'Entertainment Business',
-                    'AdultEntertainment'          => '|-Adult Entertainment',
-                    'AmusementPark'               => '|-Amusement Park',
-                    'ArtGallery'                  => '|-Art Gallery',
-                    'Casino'                      => '|-Casino',
-                    'ComedyClub'                  => '|-Comedy Club',
-                    'MovieTheater'                => '|-Movie Theater',
-                    'NightClub'                   => '|-Night Club',
-                    'FinancialService'            => 'Financial Service',
-                    'AccountingService'           => '|-Accounting Service',
-                    'AutomatedTeller'             => '|-Automated Teller',
-                    'BankOrCreditUnion'           => '|-Bank Or Credit Union',
-                    'InsuranceAgency'             => '|-Insurance Agency',
-                    'FoodEstablishment'           => 'Food Establishment',
-                    'Bakery'                      => '|-Bakery',
-                    'BarOrPub'                    => '|-Bar Or Pub',
-                    'Brewery'                     => '|-Brewery',
-                    'CafeOrCoffeeShop'            => '|-Cafe Or Coffee Shop',
-                    'FastFoodRestaurant'          => '|-Fast Food Restaurant',
-                    'IceCreamShop'                => '|-Ice Cream Shop',
-                    'Restaurant'                  => '|-Restaurant',
-                    'Winery'                      => '|-Winery',
-                    'GovernmentOffice'            => 'Government Office',
-                    'PostOffice'                  => '|-PostOffice',
-                    'HealthAndBeautyBusiness'     => 'Health And Beauty Business',
-                    'BeautySalon'                 => '|-Beauty Salon',
-                    'DaySpa'                      => '|-Day Spa',
-                    'HairSalon'                   => '|-Hair Salon',
-                    'HealthClub'                  => '|-Health Club',
-                    'NailSalon'                   => '|-Nail Salon',
-                    'TattooParlor'                => '|-Tattoo Parlor',
-                    'HomeAndConstructionBusiness' => 'Home And Construction Business',
-                    'Electrician'                 => '|-Electrician',
-                    'HVACBusiness'                => '|-HVAC Business',
-                    'HousePainter'                => '|-House Painter',
-                    'Locksmith'                   => '|-Locksmith',
-                    'MovingCompany'               => '|-Moving Company',
-                    'Plumber'                     => '|-Plumber',
-                    'RoofingContractor'           => '|-Roofing Contractor',
-                    'InternetCafe'                => 'Internet Cafe',
-                    'MedicalBusiness'             => 'Medical Business',
-                    'CommunityHealth'             => '|-Community Health',
-                    'Dentist'                     => '|-Dentist',
-                    'Dermatology'                 => '|-Dermatology',
-                    'DietNutrition'               => '|-Diet Nutrition',
-                    'Emergency'                   => '|-Emergency',
-                    'Gynecologic'                 => '|-Gynecologic',
-                    'MedicalClinic'               => '|-Medical Clinic',
-                    'Midwifery'                   => '|-Midwifery',
-                    'Nursing'                     => '|-Nursing',
-                    'Obstetric'                   => '|-Obstetric',
-                    'Oncologic'                   => '|-Oncologic',
-                    'Optician'                    => '|-Optician',
-                    'Optometric'                  => '|-Optometric',
-                    'Otolaryngologic'             => '|-Otolaryngologic',
-                    'Pediatric'                   => '|-Pediatric',
-                    'Pharmacy'                    => '|-Pharmacy',
-                    'Physician'                   => '|-Physician',
-                    'Physiotherapy'               => '|-Physiotherapy',
-                    'PlasticSurgery'              => '|-Plastic Surgery',
-                    'Podiatric'                   => '|-Podiatric',
-                    'PrimaryCare'                 => '|-Primary Care',
-                    'Psychiatric'                 => '|-Psychiatric',
-                    'PublicHealth'                => '|-Public Health',
-                    'LegalService'                => 'Legal Service',
-                    'Attorney'                    => '|-Attorney',
-                    'Notary'                      => '|-Notary',
-                    'Library'                     => 'Library',
-                    'LodgingBusiness'             => 'Lodging Business',
-                    'BedAndBreakfast'             => '|-Bed And Breakfast',
-                    'Campground'                  => '|-Campground',
-                    'Hostel'                      => '|-Hostel',
-                    'Hotel'                       => '|-Hotel',
-                    'Motel'                       => '|-Motel',
-                    'Resort'                      => '|-Resort',
-                    'ProfessionalService'         => 'Professional Service',
-                    'RadioStation'                => 'Radio Station',
-                    'RealEstateAgent'             => 'Real Estate Agent',
-                    'RecyclingCenter'             => 'Recycling Center',
-                    'SelfStorage'                 => 'Real Self Storage',
-                    'ShoppingCenter'              => 'Shopping Center',
-                    'SportsActivityLocation'      => 'Sports Activity Location',
-                    'BowlingAlley'                => '|-Bowling Alley',
-                    'ExerciseGym'                 => '|-Exercise Gym',
-                    'GolfCourse'                  => '|-Golf Course',
-                    'HealthClub'                  => '|-Health Club',
-                    'PublicSwimmingPool'          => '|-Public Swimming Pool',
-                    'SkiResort'                   => '|-Ski Resort',
-                    'SportsClub'                  => '|-Sports Club',
-                    'StadiumOrArena'              => '|-Stadium Or Arena',
-                    'TennisComplex'               => '|-Tennis Complex',
-                    'Store'                       => 'Store',
-                    'AutoPartsStore'              => '|-Auto Parts Store',
-                    'BikeStore'                   => '|-Bike Store',
-                    'BookStore'                   => '|-Book Store',
-                    'ClothingStore'               => '|-Clothing Store',
-                    'ComputerStore'               => '|-Computer Store',
-                    'ConvenienceStore'            => '|-Convenience Store',
-                    'DepartmentStore'             => '|-Department Store',
-                    'ElectronicsStore'            => '|-Electronics Store',
-                    'Florist'                     => '|-Florist',
-                    'FurnitureStore'              => '|-Furniture Store',
-                    'GardenStore'                 => '|-Garden Store',
-                    'GroceryStore'                => '|-Grocery Store',
-                    'HardwareStore'               => '|-Hardware Store',
-                    'HobbyShop'                   => '|-Hobby Shop',
-                    'HomeGoodsStore'              => '|-Home Goods Store',
-                    'JewelryStore'                => '|-Jewelry Store',
-                    'LiquorStore'                 => '|-Liquor Store',
-                    'MensClothingStore'           => '|-Mens Clothing Store',
-                    'MobilePhoneStore'            => '|-Mobile Phone Store',
-                    'MovieRentalStore'            => '|-Movie Rental Store',
-                    'MusicStore'                  => '|-Music Store',
-                    'OfficeEquipmentStore'        => '|-Office Equipment Store',
-                    'OutletStore'                 => '|-Outlet Store',
-                    'PawnShop'                    => '|-Pawn Shop',
-                    'PetStore'                    => '|-Pet Store',
-                    'ShoeStore'                   => '|-Shoe Store',
-                    'SportingGoodsStore'          => '|-Sporting Goods Store',
-                    'TireShop'                    => '|-Tire Shop',
-                    'ToyStore'                    => '|-Toy Store',
-                    'WholesaleStore'              => '|-Wholesale Store',
-                    'TelevisionStation'           => '|-Wholesale Store',
-                    'TouristInformationCenter'    => 'Tourist Information Center',
-                    'TravelAgency'                => 'Travel Agency',
-                ];
 
-        foreach ($seopress_lb_types as $type_value => $type_i18n) {
+        foreach (seopress_lb_types_list() as $type_value => $type_i18n) {
             echo '<option ';
             if ($type_value == $selected) {
                 echo 'selected="selected"';
@@ -3492,6 +3366,20 @@ User-agent: SemrushBot-SA
             $check   = isset($options['seopress_white_label_admin_bar_icon']) ? esc_attr($options['seopress_white_label_admin_bar_icon']) : null;
 
             echo '<input type="text" name="seopress_pro_option_name[seopress_white_label_admin_bar_icon]" placeholder="' . esc_html__('default value: <span class="ab-icon icon-seopress-seopress"></span> SEO', 'wp-seopress-pro') . '" aria-label="' . __('Enter the label of the link for admin bar', 'wp-seopress-pro') . '" value="' . $check . '" />';
+        }
+    }
+
+    public function seopress_white_label_admin_title_callback() {
+        if (is_network_admin() && is_multisite()) {
+            $options = get_option('seopress_pro_mu_option_name');
+            $check   = isset($options['seopress_mu_white_label_admin_title']) ? esc_attr($options['seopress_mu_white_label_admin_title']) : null;
+
+            echo '<input type="text" name="seopress_pro_mu_option_name[seopress_mu_white_label_admin_title]" placeholder="' . esc_html__('default value: SEO', 'wp-seopress-pro') . '" aria-label="' . __('Enter the title for the main menu', 'wp-seopress-pro') . '" value="' . $check . '" />';
+        } else {
+            $options = get_option('seopress_pro_option_name');
+            $check   = isset($options['seopress_white_label_admin_title']) ? esc_attr($options['seopress_white_label_admin_title']) : null;
+
+            echo '<input type="text" name="seopress_pro_option_name[seopress_white_label_admin_title]" placeholder="' . esc_html__('default value: SEO', 'wp-seopress-pro') . '" aria-label="' . __('Enter the title for the main menu', 'wp-seopress-pro') . '" value="' . $check . '" />';
         }
     }
 

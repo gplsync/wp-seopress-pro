@@ -46,6 +46,8 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
 
                         $tax 											= get_post_meta($id, $value . '_tax', true);
 
+                        $lb 											= get_post_meta($id, $value . '_lb', true);
+
                         //From current single post
                         if ( ! empty($_post_meta_value) && 7 === count($_post_meta_value)) {
                             $_post_meta_value = $_post_meta_value;
@@ -80,6 +82,10 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                         } elseif ('manual_custom_global' == $post_meta_value) {
                             if ('' != $manual_custom_global) {
                                 $_post_meta_value = $manual_custom_global;
+                            }
+                        } elseif ('manual_lb_global' == $post_meta_value) {
+                            if ('' != $lb) {
+                                $_post_meta_value = $lb;
                             }
                         } elseif ('custom_fields' == $post_meta_value) {
                             if ('' != $cf) {
@@ -1040,7 +1046,71 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                         }
                     }
 
-                    if ('' != $products_price) {
+                    if ($product->is_type('variable')) {
+                        $offers     = '"offers" : [';
+                        $variations = $product->get_available_variations();
+
+                        $i               = 1;
+                        $totalVariations = count($variations);
+                        foreach ($variations as $key => $value) {
+                            $product_global_ids         = isset($value['seopress_global_ids']) ? $value['seopress_global_ids'] : '';
+                            $product_barcode            = isset($value['seopress_barcode']) ? $value['seopress_barcode'] : '';
+
+                            $variation                  = wc_get_product($value['variation_id']);
+                            $variation_price_valid_date = '';
+
+                            if (isset($variation) && '' == $variation_price_valid_date && method_exists($variation, 'get_date_on_sale_to') && '' != $variation->get_date_on_sale_to()) {
+                                $variation_price_valid_date = $variation->get_date_on_sale_to();
+                                $variation_price_valid_date = $variation_price_valid_date->date('m-d-Y');
+                            }
+
+                            if ((empty($product_global_ids) || 'none' === $product_global_ids) && ! empty($products_global_ids)) {
+                                $product_global_ids = $products_global_ids;
+                                $product_barcode    = $products_global_ids_value;
+                            }
+
+                            if(empty($product_barcode) && ! empty($products_global_ids_value)){
+                                $product_global_ids = $products_global_ids;
+                                $product_barcode    = $products_global_ids_value;
+                            }
+
+
+                            $availability =  sprintf('%s%s/InStock', seopress_check_ssl(), 'schema.org');
+                            if ( ! $value['is_in_stock']) {
+                                $availability =  sprintf('%s%s/OutOfStock', seopress_check_ssl(), 'schema.org');
+                            }
+
+                            $sku = empty($value['sku']) ? $product->get_sku() : $value['sku'];
+
+                            $offers .= '
+                                {
+                                    "@type": "Offer",
+                                    "url": ' . json_encode(get_permalink()) . ',
+                                    "sku": "' . $sku . '",
+                                    "price": ' . $value['display_price'] . ',
+                                    "priceCurrency": "' . $products_currency . '",
+                                    "itemCondition": ' . json_encode($products_condition) . ',
+                                    "availability": "' . $availability . '"
+                                ';
+
+                            if ( ! empty($product_global_ids) && 'none' !== $product_global_ids && !empty($product_barcode)) {
+                                $offers .= sprintf(', "%s" : "%s"', $product_global_ids, $product_barcode);
+                            }
+
+                            if ($variation_price_valid_date) {
+                                $offers .= sprintf(', "%s" : "%s"', 'priceValidUntil', $variation_price_valid_date);
+                            }
+
+                            $offers .= '}';
+
+                            if ($i != $totalVariations) {
+                                $offers .= ',';
+                            }
+                            ++$i;
+                        }
+                        $offers .= ']';
+                        $html .= $offers;
+                    } elseif ('' != $products_price) {
                         $html .= '"offers": {
 								"@type": "Offer",
 								"url": ' . json_encode(get_permalink()) . ',
@@ -1051,13 +1121,14 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
 								"availability": ' . json_encode($products_availability) . '
 							}';
                     }
+
                     $html = trim($html, ',');
                     $html .= '}';
+
                     $html .= '</script>';
                     $html .= "\n";
 
                     $html = apply_filters('seopress_schemas_auto_product_html', $html);
-
                     echo $html;
                 }
             }
@@ -1551,6 +1622,7 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                 'site_title',
                 'tagline',
                 'site_url',
+                'post_id',
                 'post_title',
                 'post_excerpt',
                 'post_content',
@@ -1577,6 +1649,7 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                 get_bloginfo('name'),
                 get_bloginfo('description'),
                 get_home_url(),
+                get_the_ID(),
                 the_title_attribute('echo=0'),
                 $seopress_get_the_excerpt,
                 $seopress_get_the_content,

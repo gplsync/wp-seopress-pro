@@ -1,4 +1,4 @@
-=== SEOPress ===
+=== SEOPress, on-site SEO ===
 Authors: rainbowgeek
 Contributors: rainbowgeek, gmulti, juliobox, maigret, mgris
 Donate link: https://www.seopress.org/
@@ -6,7 +6,7 @@ Tags: SEO, XML sitemap, meta title, open graph, content analysis, knowledge grap
 Requires at least: 4.7+
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 4.3.0.2
+Stable tag: 4.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,7 +33,7 @@ SEOPress is a powerful WordPress SEO plugin to optimize your SEO, boost your tra
 	<li><a href="https://www.seopress.org/seopress-productivity/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme"><strong>Save time</strong></a>: you prefer to work with Excel or Google Spreadsheets? No problem, you can import / export your metadata from CSV files with SEOPress PRO in few clicks!</li>
 	<li><a href="https://www.seopress.org/pricing/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme"><strong>Save money</strong></a>: SEOPress PRO is available for just $39 / year. Without any sites limit. Yes, you read that right: 1 site or 100 sites, the total price is still $39 / year!</li>
 	<li><a href="https://www.seopress.org/features/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme"><strong>All in one SEO plugin</strong></a>: comes with all the features you need to optimize the SEO of your WordPress site. No need to install additional extensions to manage redirects, schemas, XML sitemaps... You reduce the risk of conflicts and maintenance costs. You don't need a special feature? Deactivate it with one click without losing your configuration. Child's play !</li>
-	<li><strong>Easy AND ready to use</strong>: you doesn't need to know SEO or code to use SEOPress. Most of the parameters are automatically set. And thanks to our installation wizard, configuring SEOPress has never been easier. To go further, we provide many <a href="https://www.seopress.org/blog/how-to/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme" target="_blank">free tutorials to learn SEO</a> in order to better understand how to position your content on search engines.</li>
+	<li><strong>Easy AND ready to use</strong>: you doesn't need to know SEO or code to use SEOPress. Most of the parameters are automatically set. And thanks to our installation wizard, configuring SEOPress has never been easier. To go further, we provide many <a href="https://www.seopress.org/blog/how-to/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme" target="_blank">free tutorials</a> and <a href="https://www.seopress.org/support/ebooks/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme" target="_blank">ebooks to learn SEO</a> in order to better understand how to position your content on search engines.</li>
 </ul>
 
 <h3>SEOPress Free Features</h3>
@@ -100,11 +100,10 @@ SEOPress is a powerful WordPress SEO plugin to optimize your SEO, boost your tra
 	<li><strong>Dublin Core</strong> meta tags</li>
 	<li><strong>Custom Breadcrumbs</strong> for single post types / term taxonomy</li>
 	<li><strong>Google Page Speed Insights</strong> to analyse your site performances</li>
-	<li><strong>Google Analytics Events</strong>: track external links, downloads (PDF, DOCX...), affiliate links...</li>
-	<li><strong>Google Enhanced Ecommerce</strong>: measure purchases, additions to and removals from shopping carts</li>
+	<li><strong>Google Enhanced Ecommerce for WooCommerce</strong>: measure purchases, additions to and removals from shopping carts</li>
 	<li>Edit your <strong>robots.txt</strong> file from the admin (multisite / multidomain ready)</li>
 	<li><strong>Google News Sitemap</strong> to get your posts on Google News</li>
-	<li><strong>404 Monitoring</strong> to improve user experience, performances and increase the crawl budget allocated by Google</li>
+	<li><strong>404 Monitoring</strong>: Monitor your 404 errors to improve user experience, performances and increase the crawl budget allocated by Google</li>
 	<li><strong>Redirect 404 to homepage/custom url automatically</strong> with custom status code (301, 302, 307, 410 or 451)</li>
 	<li>Email notifications on 404</li>
 	<li><strong>Redirect manager</strong>: create unlimited 301, 302, 307, 410 and 451 redirections. Import / export redirections to CSV or htaccess file.</li>
@@ -135,7 +134,7 @@ We support WooCommerce and Easy Digital Downloads for e-commerce sites.
 
 <a href="https://www.seopress.org/pricing/?utm_source=w.org&utm_campaign=seopress&utm_medium=readme" target="_blank"><strong>Increase your sales now!</strong></a>
 
-<h3>Elementor + SEOPress: perfect combo!</h3>
+<h3><a href="https://wordpress.org/plugins/elementor/">Elementor</a> + SEOPress: perfect combo!</h3>
 We provide deep integration with Elementor page builder. Directly from Elementor settings, you can:
 <ul>
 	<li>edit your SEO metadata (title, meta description, meta robots)</li>
@@ -180,6 +179,8 @@ Help localize SEOPress even further by adding your locale – visit <a href="htt
 
 <h3>SEOPress integrates seamlessly with popular e-commerce, translation, performance and analytics tools.</h3>
 <ul>
+	<li>Classic Editor</li>
+	<li><a href="https://wordpress.org/support/article/wordpress-editor/">Block Editor</a></li>
 	<li>WPML</li>
 	<li>Polylang</li>
 	<li>MultilingualPress</li>
@@ -316,12 +317,35 @@ You're theme is probably using a deprecated function to handle the title. <a hre
 6. Content analysis metabox
 7. SEOPress PRO
 8. Installation Wizard
+9. Schemas metabox
 
 == Changelog ==
-= 4.3.0.2 (19/01/2021) =
+= 4.4 (10/02/2021) =
+* NEW Complete code refactoring on Titles and metas feature 🎉
+* NEW Preview dynamic tags on post list columns 🎉
+* NEW Live preview when adding dynamic variables for Google Preview 🎉
+* NEW Add Local Business types to automatic schemas as new mapping option to avoid entering manually a business type 🎉 (PRO)
+* NEW Support variable products for automatic product schema (PRO) 🎉
+* NEW Support Global Product Identifiers for variable products (PRO)
+* NEW Dashboard notification if Google Analytics is enabled without UA or GA4 ids
+* NEW White Label option to change the SEO menu name (PRO)
+* NEW Add post ID to automatic schemas as new mapping option (PRO)
+* INFO Remove jQuery for Google Analytics Enhanced Ecommerce (no more jQuery with GA tracking code 🎉)
+* INFO Improve wizard assistant user interface
+* INFO Stop adding uppercase on the first letter of each word when automatically adding media attributes (eg: alt tag)
+* INFO Add new help tabs for Sitemaps and Social networks settings page to improve user experience
+* FIX Cornerstone compatibility issue with our content analysis feature
+* FIX Oxygen compatibility issue with our content analysis feature ("2 meta robots found")
+* FIX CSV broken link export with specific PHP configuration
+* FIX Social tags for term taxonomies
+* FIX White label: some SEOPress links weren't hidden
+* FIX WPML XML configuration file (wpml-config.xml)
+* FIX GA Enhanced Ecommerce check on status order for measuring purchases
+* FIX GA Enhanced Ecommerce add_to_cart event from archive product page
+= 4.3.0.2 = 19/01/2021
 * FIX Analytics tracking code if no UA-XXX set
 * FIX Conflict Google Analytics with UpdraftPlus (PRO)
-= 4.3.0.1 (15/01/2021) =
+= 4.3.0.1 = 15/01/2021
 * FIX Fatal error
 * FIX Product price with taxes for automatic product schema (default: sale price, fallback: regular price)
 * FIX Fatal error get_price in specific cases
@@ -351,4 +375,4 @@ You're theme is probably using a deprecated function to handle the title. <a hre
 * FIX Conflict with Post Type Order plugin
 * FIX Notice: trying to get property "name" of non-object
 
-<a href="https://www.seopress.org/changelog/" target="_blank">View complete changelog</a>
+<a href="https://www.seopress.org/changelog/" target="_blank">View our complete changelog</a>

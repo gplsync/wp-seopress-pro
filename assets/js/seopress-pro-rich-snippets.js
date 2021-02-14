@@ -505,28 +505,34 @@ jQuery(document).ready(function($){
         if (select == 'manual_global') {
             $(this).next('input.manual_global').show();
             $(this).closest('p').find('input.manual_global').show();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.cf').hide();
             $(this).closest('p').find('select.tax').hide();
         } else if (select == 'manual_img_global') {
             $(this).next('input.manual_img_global').show();
             $(this).closest('p').find('input.manual_img_library_global').hide();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.cf').hide();
             $(this).closest('p').find('select.tax').hide();
         } else if (select == 'manual_img_library_global') {
             $(this).next('input.manual_img_global').hide();
             $(this).closest('p').find('input.manual_img_library_global').show();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.cf').hide();
             $(this).closest('p').find('select.tax').hide();
         } else if (select == 'manual_date_global') {
             $(this).next('input.manual_date_global').show();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.cf').hide();
             $(this).closest('p').find('select.tax').hide();
         } else if (select == 'manual_time_global') {
             $(this).next('input.manual_time_global').show();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.cf').hide();
             $(this).closest('p').find('select.tax').hide();
         } else if (select == 'manual_rating_global') {
             $(this).next('input.manual_rating_global').show();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.cf').hide();
             $(this).closest('p').find('select.tax').hide();
         } else if (select == 'custom_fields') {
@@ -536,6 +542,7 @@ jQuery(document).ready(function($){
             $(this).closest('p').find('input.manual_date_global').hide();
             $(this).closest('p').find('input.manual_time_global').hide();
             $(this).closest('p').find('input.manual_rating_global').hide();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.tax').hide();
             $(this).closest('p').find('select.cf').show();
         } else if (select == 'custom_taxonomy') {
@@ -545,15 +552,23 @@ jQuery(document).ready(function($){
             $(this).closest('p').find('input.manual_date_global').hide();
             $(this).closest('p').find('input.manual_time_global').hide();
             $(this).closest('p').find('input.manual_rating_global').hide();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.cf').hide();
             $(this).closest('p').find('select.tax').show();
         } else if (select == 'manual_custom_global') {
             $(this).closest('p').find('textarea.manual_custom_global').show();
+            $(this).closest('p').find('select.lb').hide();
             $(this).closest('p').find('select.cf').hide();
-        } else {
+        } else if (select == 'manual_lb_global') {
+            $(this).closest('p').find('select.lb').show();
             $(this).closest('p').find('select.cf').hide();
             $(this).closest('p').find('select.tax').hide();
             $(this).closest('p').find('input').hide();
+            $(this).closest('p').find('textarea').hide();
+        } else {
+            $(this).closest('p').find('select.lb').hide();
+            $(this).closest('p').find('select.cf').hide();
+            $(this).closest('p').find('select.tax').hide();
             $(this).closest('p').find('input').hide();
             $(this).closest('p').find('textarea').hide();
         }

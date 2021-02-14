@@ -24,24 +24,24 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '4.3.x-dev',
-    'version' => '4.3.9999999.9999999-dev',
+    'pretty_version' => '4.4.x-dev',
+    'version' => '4.4.9999999.9999999-dev',
     'aliases' => 
     array (
     ),
-    'reference' => '8699e8bf104020f81198a8a9741d91b621b3c046',
+    'reference' => '80283e1a44a1345bcb5bc9fcea07afa9136b83ba',
     'name' => 'wp-seopress/wp-seopress',
   ),
   'versions' => 
   array (
     'firebase/php-jwt' => 
     array (
-      'pretty_version' => 'v5.2.0',
-      'version' => '5.2.0.0',
+      'pretty_version' => 'v5.2.1',
+      'version' => '5.2.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'feb0e820b8436873675fd3aca04f3728eb2185cb',
+      'reference' => 'f42c9110abe98dd6cfe9053c49bc86acc70b2d23',
     ),
     'google/apiclient' => 
     array (
@@ -54,21 +54,21 @@ private static $installed = array (
     ),
     'google/apiclient-services' => 
     array (
-      'pretty_version' => 'v0.157.0',
-      'version' => '0.157.0.0',
+      'pretty_version' => 'v0.159.0',
+      'version' => '0.159.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '957846303c28c10033fa83d8688ffd325c260a3e',
+      'reference' => 'd5334e9853afe16e7d8215006a475061d8023216',
     ),
     'google/auth' => 
     array (
-      'pretty_version' => 'v1.14.3',
-      'version' => '1.14.3.0',
+      'pretty_version' => 'v1.15.0',
+      'version' => '1.15.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c1503299c779af0cbc99b43788f75930988852cf',
+      'reference' => 'b346c07de6613e26443d7b4830e5e1933b830dc4',
     ),
     'guzzlehttp/guzzle' => 
     array (
@@ -126,12 +126,12 @@ private static $installed = array (
     ),
     'phpseclib/phpseclib' => 
     array (
-      'pretty_version' => '3.0.3',
-      'version' => '3.0.3.0',
+      'pretty_version' => '3.0.4',
+      'version' => '3.0.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '97a5a270e4a9ebfc1a7e2f462e917cbce1a8e6d9',
+      'reference' => '845a2275e886ba9fb386c8f59cb383dd9c8963e9',
     ),
     'psr/cache' => 
     array (
@@ -221,12 +221,12 @@ private static $installed = array (
     ),
     'wp-seopress/wp-seopress' => 
     array (
-      'pretty_version' => '4.3.x-dev',
-      'version' => '4.3.9999999.9999999-dev',
+      'pretty_version' => '4.4.x-dev',
+      'version' => '4.4.9999999.9999999-dev',
       'aliases' => 
       array (
       ),
-      'reference' => '8699e8bf104020f81198a8a9741d91b621b3c046',
+      'reference' => '80283e1a44a1345bcb5bc9fcea07afa9136b83ba',
     ),
   ),
 );

@@ -360,6 +360,7 @@ function seopress_schemas_cpt($post)
 				'site_url'   => __('Site URL', 'wp-seopress-pro'),
 			],
 			'Post Meta' => [
+				'post_id'          => __('Post / Product ID', 'wp-seopress-pro'),
 				'post_title'       => __('Post Title / Product title', 'wp-seopress-pro'),
 				'post_excerpt'     => __('Excerpt / Product short description', 'wp-seopress-pro'),
 				'post_content'     => __('Content', 'wp-seopress-pro'),
@@ -411,7 +412,19 @@ function seopress_schemas_cpt($post)
 				$seopress_schemas_tax .= '<option ' . selected($key, $post_meta_value, false) . ' value="' . $key . '">' . $key . '</option>';
 			}
 			$seopress_schemas_tax .= '</select>';
-		}
+        }
+
+        //LB types list
+        if ($case === 'lb') {
+            $post_meta_value = get_post_meta($post->ID, '_' . $post_meta_name . '_lb', true);
+
+            $seopress_schemas_lb = '<select name="' . $post_meta_name . '_lb" class="lb">';
+
+            foreach (seopress_lb_types_list() as $type_value => $type_i18n) {
+                $seopress_schemas_lb .= '<option '.selected($type_value, $post_meta_value, false).' value="' . $type_value . '">' . __($type_i18n, 'wp-seopress-pro') . '</option>';
+            }
+            $seopress_schemas_lb .= '</select>';
+        }
 
 		switch ($case) {
 				case 'default':
@@ -423,6 +436,24 @@ function seopress_schemas_cpt($post)
 					$post_meta_value = get_post_meta($post->ID, '_' . $post_meta_name . '_manual_global', true);
 
 					$seopress_schemas_manual_global = '<input type="text" id="' . $post_meta_name . '_manual_global" name="' . $post_meta_name . '_manual_global" class="manual_global" placeholder="' . esc_html__('Enter a global value here', 'wp-seopress-pro') . '" aria-label="' . __('Manual value', 'wp-seopress-pro') . '" value="' . $post_meta_value . '" />';
+
+                    break;
+                case 'lb':
+                    $seopress_schemas_mapping_case['Manual'] = [
+						'manual_global' => __('Manual text', 'wp-seopress-pro'),
+						'manual_single' => __('Manual text on each post', 'wp-seopress-pro'),
+					];
+
+					$post_meta_value = get_post_meta($post->ID, '_' . $post_meta_name . '_manual_global', true);
+
+					$seopress_schemas_manual_global = '<input type="text" id="' . $post_meta_name . '_manual_global" name="' . $post_meta_name . '_manual_global" class="manual_global" placeholder="' . esc_html__('Enter a global value here', 'wp-seopress-pro') . '" aria-label="' . __('Manual value', 'wp-seopress-pro') . '" value="' . $post_meta_value . '" />';
+
+                    //lb types case
+                    $seopress_schemas_mapping_case['Local Business'] = [
+                        'manual_lb_global' => __('Local Business type', 'wp-seopress-pro'),
+                    ];
+
+                    $post_meta_value = get_post_meta($post->ID, '_' . $post_meta_name . '_manual_lb_global', true);
 
 					break;
 				case 'image':
@@ -544,6 +575,9 @@ function seopress_schemas_cpt($post)
 		}
 		if (isset($seopress_schemas_tax) && 'custom' != $case) {
 			$html .= $seopress_schemas_tax;
+		}
+		if (isset($seopress_schemas_lb) && 'custom' != $case) {
+			$html .= $seopress_schemas_lb;
 		}
 		if (isset($seopress_schemas_manual_custom_global)) {
 			$html .= $seopress_schemas_manual_custom_global;
@@ -741,7 +775,7 @@ function seopress_schemas_cpt($post)
 									</p>
 									<p>
 										<label for="seopress_pro_rich_snippets_lb_type_meta">' . __('Select a business type', 'wp-seopress-pro') . '</label>
-										' . seopress_schemas_mapping_array('seopress_pro_rich_snippets_lb_type', 'default') . '
+										' . seopress_schemas_mapping_array('seopress_pro_rich_snippets_lb_type', 'lb') . '
 									</p>
 									<p class="description"><a href="https://schema.org/LocalBusiness" target="_blank" title="'.__('All business types (new window)','wp-seopress-pro').'">'.__('Full list of business types available on schema.org','wp-seopress-pro').'</a><span class="dashicons dashicons-external"></span></p>
 									<p>
@@ -1890,8 +1924,11 @@ function seopress_schemas_save_metabox($post_id, $post)
 	if (isset($_POST['seopress_pro_rich_snippets_lb_type_tax'])) {
 		update_post_meta($post_id, '_seopress_pro_rich_snippets_lb_type_tax', esc_html($_POST['seopress_pro_rich_snippets_lb_type_tax']));
 	}
-	if (isset($_POST['seopress_pro_rich_snippets_lb_type_manual_global'])) {
-		update_post_meta($post_id, '_seopress_pro_rich_snippets_lb_type_manual_global', esc_html($_POST['seopress_pro_rich_snippets_lb_type_manual_global']));
+	if (isset($_POST['seopress_pro_rich_snippets_lb_type_lb'])) {
+		update_post_meta($post_id, '_seopress_pro_rich_snippets_lb_type_lb', esc_html($_POST['seopress_pro_rich_snippets_lb_type_lb']));
+	}
+	if (isset($_POST['seopress_pro_rich_snippets_lb_type_manual_lb_global'])) {
+		update_post_meta($post_id, '_seopress_pro_rich_snippets_lb_type_manual_lb_global', esc_html($_POST['seopress_pro_rich_snippets_lb_type_manual_lb_global']));
 	}
 	if (isset($_POST['seopress_pro_rich_snippets_lb_img'])) {
 		update_post_meta($post_id, '_seopress_pro_rich_snippets_lb_img', esc_html($_POST['seopress_pro_rich_snippets_lb_img']));
