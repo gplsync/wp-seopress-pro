@@ -4,7 +4,7 @@ Plugin Name: SEOPress PRO
 Plugin URI: https://www.seopress.org/seopress-pro/
 GitHub Plugin URI: https://github.com/gplsync/wp-seopress-pro/
 Description: The PRO version of SEOPress. SEOPress required (free).
-Version: 4.4.0
+Version: 4.4.0.1
 Author: SEOPress
 Author URI: https://www.seopress.org/seopress-pro/
 License: GPLv2
@@ -78,9 +78,7 @@ function seopress_pro_activation() {
             activate_plugins('wp-seopress/seopress.php');
         }
         add_option('seopress_pro_activated', 'yes');
-
-	update_option('seopress_pro_license_key', 'GPL001122334455AA6677BB8899CC000');  
-    update_option('seopress_pro_license_status', 'valid');
+    	update_option( 'seopress_pro_license_status', 'valid');
 
         flush_rewrite_rules(false);
 
@@ -143,7 +141,7 @@ function seopress_pro_uninstall() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //Define
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-define('SEOPRESS_PRO_VERSION', '4.4.0');
+define('SEOPRESS_PRO_VERSION', '4.4.0.1');
 define('SEOPRESS_PRO_AUTHOR', 'Benjamin Denis');
 define('STORE_URL_SEOPRESS', 'https://www.seopress.org');
 define('ITEM_ID_SEOPRESS', 113);

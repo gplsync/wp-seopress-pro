@@ -1046,7 +1046,7 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                         }
                     }
 
-                    if ($product->is_type('variable')) {
+                    if (isset($product) && method_exists($product, 'is_type') && $product->is_type('variable')) {
                         $offers     = '"offers" : [';
                         $variations = $product->get_available_variations();
 
@@ -1069,11 +1069,10 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                                 $product_barcode    = $products_global_ids_value;
                             }
 
-                            if(empty($product_barcode) && ! empty($products_global_ids_value)){
+                            if (empty($product_barcode) && ! empty($products_global_ids_value)) {
                                 $product_global_ids = $products_global_ids;
                                 $product_barcode    = $products_global_ids_value;
                             }
-
 
                             $availability =  sprintf('%s%s/InStock', seopress_check_ssl(), 'schema.org');
                             if ( ! $value['is_in_stock']) {
@@ -1093,7 +1092,7 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                                     "availability": "' . $availability . '"
                                 ';
 
-                            if ( ! empty($product_global_ids) && 'none' !== $product_global_ids && !empty($product_barcode)) {
+                            if ( ! empty($product_global_ids) && 'none' !== $product_global_ids && ! empty($product_barcode)) {
                                 $offers .= sprintf(', "%s" : "%s"', $product_global_ids, $product_barcode);
                             }
 
