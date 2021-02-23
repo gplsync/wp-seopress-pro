@@ -935,10 +935,12 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                     }
 
                     $products_price_valid_date 				= $schema_datas['price_valid_date'];
+
                     if (isset($product) && '' == $products_price_valid_date && method_exists($product, 'get_date_on_sale_to') && '' != $product->get_date_on_sale_to()) {
                         $products_price_valid_date = $product->get_date_on_sale_to();
                         $products_price_valid_date = $products_price_valid_date->date('m-d-Y');
                     }
+
                     $products_sku 							= $schema_datas['sku'];
                     if (isset($product) && '' == $products_sku && method_exists($product, 'get_sku') && '' != $product->get_sku()) {
                         $products_sku = $product->get_sku();
@@ -1052,16 +1054,34 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
 
                         $i               = 1;
                         $totalVariations = count($variations);
+
                         foreach ($variations as $key => $value) {
-                            $product_global_ids         = isset($value['seopress_global_ids']) ? $value['seopress_global_ids'] : '';
-                            $product_barcode            = isset($value['seopress_barcode']) ? $value['seopress_barcode'] : '';
+                            $product_global_ids = $schema_datas['global_ids'];
+                            $product_barcode    = $schema_datas['global_ids_value'];
+
+                            if ((empty($product_global_ids) || 'none' === $product_global_ids) || (empty($product_barcode) || 'none' === $product_barcode)) {
+                                if (isset($value['seopress_global_ids']) && ! empty($value['seopress_global_ids'])) {
+                                    $product_global_ids         = $value['seopress_global_ids'];
+                                }
+                                if (isset($value['seopress_barcode']) && ! empty($value['seopress_barcode'])) {
+                                    $product_barcode            = $value['seopress_barcode'];
+                                }
+                            }
 
                             $variation                  = wc_get_product($value['variation_id']);
                             $variation_price_valid_date = '';
-
                             if (isset($variation) && '' == $variation_price_valid_date && method_exists($variation, 'get_date_on_sale_to') && '' != $variation->get_date_on_sale_to()) {
                                 $variation_price_valid_date = $variation->get_date_on_sale_to();
                                 $variation_price_valid_date = $variation_price_valid_date->date('m-d-Y');
+                            } else {
+                                if ( ! empty($schema_datas['price_valid_date'])) {
+                                    try {
+                                        $date                       = new \DateTime($schema_datas['price_valid_date']);
+                                        $variation_price_valid_date = $date->format('m-d-Y');
+                                    } catch (\Exception $e) {
+                                        $variation_price_valid_date = $schema_datas['price_valid_date'];
+                                    }
+                                }
                             }
 
                             if ((empty($product_global_ids) || 'none' === $product_global_ids) && ! empty($products_global_ids)) {
@@ -1079,14 +1099,21 @@ if ('1' == seopress_rich_snippets_enable_option()) { //Is RS enable
                                 $availability =  sprintf('%s%s/OutOfStock', seopress_check_ssl(), 'schema.org');
                             }
 
-                            $sku = empty($value['sku']) ? $product->get_sku() : $value['sku'];
+                            $sku = $schema_datas['sku'];
+                            if (empty($sku) || 'none' === $sku || $product->get_sku() === $sku) {
+                                $sku = empty($value['sku']) ? $product->get_sku() : $value['sku'];
+                            }
+
+                            if (isset($variation) && method_exists($variation, 'get_price') && '' != $variation->get_price()) {
+                                $variation_price = $variation->get_price();
+                            }
 
                             $offers .= '
                                 {
                                     "@type": "Offer",
                                     "url": ' . json_encode(get_permalink()) . ',
                                     "sku": "' . $sku . '",
-                                    "price": ' . $value['display_price'] . ',
+                                    "price": ' . $variation_price . ',
                                     "priceCurrency": "' . $products_currency . '",
                                     "itemCondition": ' . json_encode($products_condition) . ',
                                     "availability": "' . $availability . '"

@@ -1473,7 +1473,7 @@ class seopress_pro_options {
             'rss'=> [
                 'icon'  => 'rss',
                 'title' => __('RSS feeds', 'wp-seopress-pro'),
-                'desc'  => __('Configure WordPress default feeds.', 'wp-seopress-pro'),
+                'desc'  => sprintf(__('Configure WordPress default feeds. <br><br><a href="%s" class="button" target="_blank"><span class="dashicons dashicons-visibility"></span>View my RSS feed</a>', 'wp-seopress-pro'), get_home_url().'/feed'),
             ],
             'rewrite'=> [
                 'toggle' => 1,
